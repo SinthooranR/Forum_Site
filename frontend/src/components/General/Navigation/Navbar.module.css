@@ -1,0 +1,34 @@
+.Navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style: none;
+    width: 100%;
+    background-color: #F2F2F2;
+    top: 0;
+}
+
+.Navbar li{
+    padding-left: 5%;
+}
+
+.Navbar img{
+    object-fit: contain;
+    height: 55px;
+    width: 100px;
+}
+
+.Navbar span{
+    margin-right: 2.5%;
+}
+
+.Navbar button{
+    margin-top: 5%;
+}
+
+/* .Navbar a, Navbar a:visited{
+    text-decoration: none;
+    color: blue;
+} */
+
+

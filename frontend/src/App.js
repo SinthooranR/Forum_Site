@@ -1,24 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useCallback } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Navbar from "./components/General/Navigation/Navbar";
+
+import HomePage from "./pages/MainPages/HomePage";
+import LoginPage from "./pages/Credentials/Login";
+import SignupPage from "./pages/Credentials/Signup";
+import UserHomePage from "./pages/MainPages/UserHomePage";
+
+// a global function to pass variables
+import { MainContext } from "./main_context";
+
+import "./App.css";
 
 function App() {
+  const [loginState, setLoginState] = useState(false);
+
+  const loginChange = useCallback(() => {
+    setLoginState(true);
+  }, []);
+
+  const logoutChange = useCallback(() => {
+    setLoginState(false);
+  }, []);
+
+  let routes;
+
+  if (!loginState) {
+    routes = (
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignupPage} />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route exact path="/" component={UserHomePage} />
+      </Switch>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MainContext.Provider
+      value={{
+        loggedIn: loginState,
+        login: loginChange,
+        logout: logoutChange
+      }}
+    >
+      <div className="App">
+        <Router>
+          <Navbar />
+          {routes}
+        </Router>
+      </div>
+    </MainContext.Provider>
   );
 }
 
