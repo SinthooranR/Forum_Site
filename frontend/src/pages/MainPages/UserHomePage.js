@@ -1,8 +1,9 @@
 import React from 'react';
+import ForumPost from '../../components/ForumPost/ForumPost';
 
 const UserHome = (props) => {
-    return(
-    <h2>Logged In</h2>
+    return (
+        <ForumPost author="Bob" title="YO" post="YO MY NAME IS BOB" date="11-20-2020" />
     );
 }
 

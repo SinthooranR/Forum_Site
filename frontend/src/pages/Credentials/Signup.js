@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { MainContext } from '../../main_context';
 import classes from "./Signup.module.css";
 
 const SignUp = (props) => {
@@ -10,6 +11,7 @@ const SignUp = (props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const auth = useContext(MainContext)
   const history = useHistory();
 
   const changeUsername = (event) => {
@@ -34,8 +36,10 @@ const SignUp = (props) => {
   };
 
   const submitSignup = (event) => {
+    auth.login();
     alert(`${username}, ${email}, ${password}, ${confirmPassword}`);
     console.log(username, email, password, confirmPassword);
+    history.push("/");
     event.preventDefault();
   };
 

@@ -55,8 +55,9 @@ const Navbar = (props) => {
     navButtons = (
       <Button
         variant="contained"
-        style={{ marginRight: "5px" }}
+        style={{ marginTop: "10px" }}
         onClick={logoutHandler}
+        color="secondary"
       >
         Logout
       </Button>
