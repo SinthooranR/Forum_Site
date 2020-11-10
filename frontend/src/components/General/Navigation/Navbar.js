@@ -17,7 +17,6 @@ const Navbar = (props) => {
     event.preventDefault();
   };
 
-
   const logoutHandler = (event) => {
     auth.logout();
     history.push("/");
@@ -33,6 +32,12 @@ const Navbar = (props) => {
     history.push("/");
     event.preventDefault();
   };
+
+  const createPostHandler = (event) => {
+    history.push("/createPost");
+    event.preventDefault();
+  };
+
 
   let navButtons;
 
@@ -53,20 +58,34 @@ const Navbar = (props) => {
     );
   } else {
     navButtons = (
-      <Button
-        variant="contained"
-        style={{ marginTop: "10px" }}
-        onClick={logoutHandler}
-        color="secondary"
-      >
-        Logout
-      </Button>
+      <React.Fragment>
+        <Button
+          variant="contained"
+          style={{ marginTop: "10px",width: "150px"}}
+          onClick={createPostHandler}
+          color="primary"
+        >
+          Create Post?
+        </Button>
+        <Button
+          variant="contained"
+          style={{ marginTop: "10px" }}
+          onClick={logoutHandler}
+          color="secondary"
+        >
+          Logout
+        </Button>
+      </React.Fragment>
     );
   }
 
   return (
     <div className={classes.Navbar}>
       <img src={logo} onClick={homeHandler} />
+      {auth.loggedIn && <div>
+        <NavItem exact to="/" routeName="Home"/>
+        <NavItem to="/myPosts" routeName="My Posts"/>
+      </div>}
       <span>{navButtons}</span>
     </div>
   );

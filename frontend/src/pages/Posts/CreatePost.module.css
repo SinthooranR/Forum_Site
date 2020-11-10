@@ -1,9 +1,10 @@
-.SignUp{
+.Post{
     display: flex;
     flex-direction: column;
+    color: white;
 }
 
-.SignUp form{
+.Post form{
     display: flex;
     flex-direction: column;
     width: 50%;
@@ -11,18 +12,22 @@
     margin-top: 2.5%;
 }
 
-.SignUp div{
+.Post div{
     display: flex;
     flex-direction: column;
     margin-bottom: 2%;
 }
 
-.SignUp input{
+.Post input{
     margin-left: 2%;
     color: white;
 }
 
-.SignUp button{
+.Post button{
     width: 25%;
     margin: 0 1% 0 1%;
+}
+
+.root{
+    color: white;
 }

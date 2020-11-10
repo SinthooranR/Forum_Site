@@ -6,6 +6,7 @@ import HomePage from "./pages/MainPages/HomePage";
 import LoginPage from "./pages/Credentials/Login";
 import SignupPage from "./pages/Credentials/Signup";
 import UserHomePage from "./pages/MainPages/UserHomePage";
+import CreatePostPage from './pages/Posts/CreatePost';
 
 // a global function to pass variables
 import { MainContext } from "./main_context";
@@ -37,6 +38,7 @@ function App() {
     routes = (
       <Switch>
         <Route exact path="/" component={UserHomePage} />
+        <Route exact path="/createPost" component={CreatePostPage} />
       </Switch>
     );
   }

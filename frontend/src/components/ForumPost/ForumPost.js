@@ -20,10 +20,10 @@ const ForumPost = (props) => {
                     {props.title}
                 </Typography>
                 <Typography color="textSecondary" style={{ display: "flex", justifyContent: "space-between" }}>
-                    <p>Posted by{props.author}</p>
-                    <p>On {props.date}</p>
+                    <span>Posted by{props.author}</span>
+                    <span>On {props.date}</span>
                 </Typography>
-                <Typography variant="body2" component="p">
+                <Typography variant="body2" component="span">
                     {props.post}
                 </Typography>
             </CardContent>

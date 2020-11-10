@@ -1,14 +1,13 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import classes from './NavItem.module.css'
 
 const NavItem = (props) => {
 
-const dropdown = <div>HI</div>
-const navLink = <NavLink to={props.to} exact={props.exact}>{props.routeName}</NavLink>
 
   return(
-      <div>
-      {props.isNav ? navLink : dropdown}
+      <div className={classes.NavItem}>
+      <NavLink to={props.to} exact={props.exact} activeStyle={{color: "black"}} style={props.style}>{props.routeName}</NavLink>
       </div>
   );
 

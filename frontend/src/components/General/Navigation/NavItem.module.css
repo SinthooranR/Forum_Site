@@ -1,0 +1,19 @@
+.NavItem {
+  width: 100%;
+  margin-top: "1%";
+}
+
+.NavItem a {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fefefe;
+  font-size: 1.2rem;
+}
+
+.NavItem a:hover {
+  border-top: 2px solid black;
+}
+
+.NavItem a:visited {
+  color: #fefefe;
+}
