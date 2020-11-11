@@ -1,7 +1,6 @@
 .Post{
     display: flex;
     flex-direction: column;
-    color: white;
 }
 
 .Post form{
@@ -20,14 +19,9 @@
 
 .Post input{
     margin-left: 2%;
-    color: white;
 }
 
 .Post button{
     width: 25%;
     margin: 0 1% 0 1%;
-}
-
-.root{
-    color: white;
 }

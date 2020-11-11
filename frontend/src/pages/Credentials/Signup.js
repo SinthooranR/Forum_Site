@@ -49,7 +49,7 @@ const SignUp = (props) => {
       <form noValidate autoComplete="off" onSubmit={submitSignup}>
         <TextField
           id="outlined-basic"
-          label="Username"
+          label="Enter Username"
           variant="outlined"
           value={username}
           onChange={changeUsername}
@@ -57,7 +57,7 @@ const SignUp = (props) => {
         <TextField
           id="outlined-basic"
           type="email"
-          label="Email"
+          label="Enter Email"
           variant="outlined"
           value={email}
           onChange={changeEmail}
@@ -65,7 +65,7 @@ const SignUp = (props) => {
         <TextField
           id="outlined-basic"
           type="password"
-          label="Password"
+          label="Enter Password"
           variant="outlined"
           value={password}
           onChange={changePassword}

@@ -2,7 +2,8 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {MainContext} from '../../main_context';
+import { MainContext } from '../../main_context';
+import Input from '../../components/General/Input/Input';
 
 import classes from "./Login.module.css";
 
@@ -38,7 +39,7 @@ const Login = (props) => {
       <form noValidate autoComplete="off" onSubmit={submitLogin}>
         <TextField
           id="outlined-basic"
-          label="Username"
+          label="Enter Username"
           variant="outlined"
           value={username}
           onChange={changeUsername}
@@ -46,7 +47,7 @@ const Login = (props) => {
         <TextField
           id="outlined-basic"
           type="password"
-          label="Password"
+          label="Enter Password"
           variant="outlined"
           value={password}
           onChange={changePassword}
