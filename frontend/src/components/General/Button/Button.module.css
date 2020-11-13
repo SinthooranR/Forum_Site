@@ -1,0 +1,39 @@
+.Button{
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    height: 50px;
+    width: 20%;
+    margin-right: 2%;
+    cursor: pointer;
+}
+
+.Button:disabled, .Light:hover:disabled, .Dark:hover:disabled{
+    background: #dddddd;
+    color: grey;
+}
+
+/* .Button:hover{
+   
+} */
+
+.Light{
+    background-color:#fefefe;
+    color: black;
+}
+
+.Light:hover{
+    background-color: #ADA996;
+    color: black;
+}
+
+
+.Dark{
+    background-color: #434343;
+    color: white;
+}
+
+.Dark:hover{
+    background-color: #1F1C2C;
+    color: white;
+}

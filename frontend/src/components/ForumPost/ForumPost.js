@@ -9,28 +9,28 @@ import classes from './ForumPost.module.css'
 
 const ForumPost = (props) => {
     return (
-        // <div className={classes.Post}>
-        //     <p>{props.author}</p>
-        //     <h2>{props.title}</h2>
-        //     <p>{props.post}</p>
-        // </div>
-        <Card className={classes.Post} variant="outlined">
-            <CardContent>
-                <Typography color="textSecondary" gutterBottom>
-                    {props.title}
-                </Typography>
-                <Typography color="textSecondary" style={{ display: "flex", justifyContent: "space-between" }}>
-                    <span>Posted by{props.author}</span>
-                    <span>On {props.date}</span>
-                </Typography>
-                <Typography variant="body2" component="span">
-                    {props.post}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small">Reply</Button>
-            </CardActions>
-        </Card>
+        <div className={classes.Post}>
+            <p>{props.author}</p>
+            <h2>{props.title}</h2>
+            <p>{props.post}</p>
+        </div>
+        // <Card className={classes.Post} variant="outlined">
+        //     <CardContent>
+        //         <Typography color="textSecondary" gutterBottom>
+        //             {props.title}
+        //         </Typography>
+        //         <Typography color="textSecondary" style={{ display: "flex", justifyContent: "space-between" }}>
+        //             <span>Posted by{props.author}</span>
+        //             <span>On {props.date}</span>
+        //         </Typography>
+        //         <Typography variant="body2" component="span">
+        //             {props.post}
+        //         </Typography>
+        //     </CardContent>
+        //     <CardActions>
+        //         <Button size="small">Reply</Button>
+        //     </CardActions>
+        // </Card>
     )
 }
 

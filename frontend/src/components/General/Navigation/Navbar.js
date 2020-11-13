@@ -2,10 +2,9 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import NavItem from "./NavItem";
 import logo from "../../../assets/logo.png";
-import Button from "@material-ui/core/Button";
-
+// import Button from "@material-ui/core/Button";
+import Button from "../Button/Button";
 import { MainContext } from "../../../main_context";
-
 import classes from "./Navbar.module.css";
 
 const Navbar = (props) => {
@@ -28,6 +27,17 @@ const Navbar = (props) => {
     event.preventDefault();
   };
 
+  const themeSwitchHandler = () => {
+    auth.setTheme();
+  };
+
+  let navColor
+  if (auth.themeSwitch === false) {
+    navColor = classes.LightNav;
+  } else {
+    navColor = classes.DarkNav;
+  }
+
   const homeHandler = (event) => {
     history.push("/");
     event.preventDefault();
@@ -38,55 +48,51 @@ const Navbar = (props) => {
     event.preventDefault();
   };
 
-
   let navButtons;
 
   if (!auth.loggedIn) {
     navButtons = (
       <React.Fragment>
         <Button
-          variant="contained"
-          style={{ marginRight: "5px" }}
+          type="submit"
+          buttonLabel="Login"
+          color="dark"
           onClick={loginHandler}
-        >
-          Login
-        </Button>
-        <Button variant="contained" color="primary" onClick={signupHandler}>
-          SignUp
-        </Button>
+        />
+        <Button buttonLabel="Register" color="light" onClick={signupHandler} />
       </React.Fragment>
     );
   } else {
     navButtons = (
       <React.Fragment>
         <Button
-          variant="contained"
-          style={{ marginTop: "10px",width: "150px"}}
+          type="submit"
+          buttonLabel="Create Post"
+          color="dark"
           onClick={createPostHandler}
-          color="primary"
-        >
-          Create Post?
-        </Button>
-        <Button
-          variant="contained"
-          style={{ marginTop: "10px" }}
-          onClick={logoutHandler}
-          color="secondary"
-        >
-          Logout
-        </Button>
+        />
+        <Button buttonLabel="Logout" color="light" onClick={logoutHandler} />
       </React.Fragment>
     );
   }
 
   return (
-    <div className={classes.Navbar}>
+    <div className={[classes.Navbar, navColor].join(" ")}>
       <img src={logo} onClick={homeHandler} />
-      {auth.loggedIn && <div>
-        <NavItem exact to="/" routeName="Home"/>
-        <NavItem to="/myPosts" routeName="My Posts"/>
-      </div>}
-      <span>{navButtons}</span>
+      {auth.loggedIn && (
+        <span className={classes.Links}>
+          <NavItem exact to="/" routeName="Home" />
+          <NavItem to="/myPosts" routeName="My Posts" />
+        </span>
+      )}
+      <span>
+        {navButtons}{" "}
+        <Button
+          buttonLabel="Switch Theme"
+          color="dark"
+          onClick={themeSwitchHandler}
+        />
+      </span>
     </div>
   );
 };

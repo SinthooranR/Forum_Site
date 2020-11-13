@@ -1,0 +1,38 @@
+.Input{
+    margin-bottom: 5%;
+    margin-left: 0;
+}
+
+
+.Input input{
+    height: 50px;
+    font-size: 1.2rem;
+    width: 100%;
+   
+}
+
+.Input textarea{
+    font-size: 1.6rem;
+    margin-left: 2%;
+    width: 100%;
+}
+
+.LightInput{
+    background-color: #DBDBDB;
+    color: black;
+    border: 1px solid black;
+}
+
+.LightInput::placeholder{
+    color: black;
+}
+
+.DarkInput{
+    background-color: #414345;
+    color: white;
+    border: 1px solid white;
+}
+
+.DarkInput::placeholder{
+    color: white;
+}

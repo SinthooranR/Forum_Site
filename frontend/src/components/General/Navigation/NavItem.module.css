@@ -1,19 +1,30 @@
 .NavItem {
   width: 100%;
-  margin-top: "1%";
+  /* margin-top: "1%"; */
 }
 
 .NavItem a {
   text-transform: uppercase;
   text-decoration: none;
-  color: #fefefe;
-  font-size: 1.2rem;
+  /* color: #fefefe; */
+  font-size: 1.5rem;
 }
 
-.NavItem a:hover {
+.LightLink a, .LightLink a:visited {
+  color: black;
+}
+
+.LightLink a:hover{
   border-top: 2px solid black;
 }
 
-.NavItem a:visited {
-  color: #fefefe;
+
+.DarkLink a, .DarkLink a:visited {
+  color: white;
 }
+
+.DarkLink a:hover{
+  border-top: 2px solid white;
+}
+
+

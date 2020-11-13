@@ -1,11 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { MainContext } from "../../main_context";
-import { makeStyles } from '@material-ui/core/styles';
+import Input from "../../components/General/Input/Input";
+import Button from "../../components/General/Button/Button";
 import classes from "./CreatePost.module.css";
-
 
 const CreateForm = (props) => {
   const history = useHistory();
@@ -35,30 +33,33 @@ const CreateForm = (props) => {
     <div className={classes.Post}>
       <h2>Enter Post Below</h2>
       <form noValidate autoComplete="off" onSubmit={submitPost}>
-        <TextField
-          id="outlined-basic"
-          label="Enter Username"
-          variant="outlined"
-          color="primary"
+        <Input
+          type="text"
+          placeholder="Enter Title"
           value={title}
           onChange={changeTitle}
         />
-        <TextField
-          id="outlined-multiline-static"
-          label="Enter Paragraph"
-          multiline
+        <Input
+          multiLine
           rows={10}
+          type="text"
+          placeholder="Enter Paragraph"
           value={paragraph}
           onChange={changeParagraph}
-          variant="outlined"
         />
+
         <span>
-          <Button variant="contained" onClick={cancelCreatePost}>
-            CANCEL
-          </Button>
-          <Button variant="contained" color="primary" onClick={submitPost}>
-            SUBMIT POST
-          </Button>
+          <Button
+            type="submit"
+            buttonLabel="Submit Post"
+            color="dark"
+            onClick={() => submitPost}
+          />
+          <Button
+            buttonLabel="Cancel"
+            color="light"
+            onClick={cancelCreatePost}
+          />
         </span>
       </form>
     </div>

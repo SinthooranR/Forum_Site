@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import { MainContext } from '../../main_context';
+import { MainContext } from "../../main_context";
+import Input from "../../components/General/Input/Input";
+import Button from '../../components/General/Button/Button';
 import classes from "./Signup.module.css";
 
 const SignUp = (props) => {
@@ -11,7 +11,7 @@ const SignUp = (props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const auth = useContext(MainContext)
+  const auth = useContext(MainContext);
   const history = useHistory();
 
   const changeUsername = (event) => {
@@ -47,48 +47,33 @@ const SignUp = (props) => {
     <div className={classes.SignUp}>
       <h2>Please SignUp Below</h2>
       <form noValidate autoComplete="off" onSubmit={submitSignup}>
-        <TextField
-          id="outlined-basic"
-          label="Enter Username"
-          variant="outlined"
+        <Input
+          type="text"
+          placeholder="Enter Username"
           value={username}
           onChange={changeUsername}
         />
-        <TextField
-          id="outlined-basic"
-          type="email"
-          label="Enter Email"
-          variant="outlined"
+        <Input
+          type="text"
+          placeholder="Enter Email"
           value={email}
           onChange={changeEmail}
         />
-        <TextField
-          id="outlined-basic"
+        <Input
           type="password"
-          label="Enter Password"
-          variant="outlined"
+          placeholder="Enter Password"
           value={password}
           onChange={changePassword}
         />
-        <TextField
-          id="outlined-basic"
-          type="password"
-          label="Confirm Password"
-          variant="outlined"
+        <Input
+          type="text"
+          placeholder="Confirm Password"
           value={confirmPassword}
           onChange={changeConfirmPassword}
         />
+
         <span>
-          <Button
-            type="submit"
-            variant="contained"
-            onClick={() => submitSignup}
-          >
-            Register
-          </Button>
-          <Button variant="contained" color="primary" onClick={loginHandler}>
-            Login Instead!
-          </Button>
+        <Button type="submit" buttonLabel="Verify and SignUp" color="dark" disabled={!(username && email && password && confirmPassword)} onClick={() => submitSignup}/>
         </span>
       </form>
     </div>

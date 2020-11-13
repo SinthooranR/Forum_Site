@@ -1,28 +1,20 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import { MainContext } from '../../main_context';
-import Input from '../../components/General/Input/Input';
-
+import { MainContext } from "../../main_context";
+import Input from "../../components/General/Input/Input";
 import classes from "./Login.module.css";
+import Button from '../../components/General/Button/Button';
 
 const Login = (props) => {
   const history = useHistory();
   const auth = useContext(MainContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const changeUsername = (event) => {
     setUsername(event.target.value);
   };
   const changePassword = (event) => {
     setPassword(event.target.value);
-  };
-
-  const registerHandler = (event) => {
-    history.push("/signup");
-    event.preventDefault();
   };
 
   const submitLogin = (event) => {
@@ -37,28 +29,36 @@ const Login = (props) => {
     <div className={classes.Login}>
       <h2>Please Login Below</h2>
       <form noValidate autoComplete="off" onSubmit={submitLogin}>
-        <TextField
-          id="outlined-basic"
-          label="Enter Username"
-          variant="outlined"
+        <Input
+          type="text"
+          placeholder="Enter Username"
           value={username}
           onChange={changeUsername}
         />
-        <TextField
-          id="outlined-basic"
+        <Input
           type="password"
-          label="Enter Password"
-          variant="outlined"
+          placeholder="Enter Password"
           value={password}
           onChange={changePassword}
         />
+
         <span>
-          <Button type="submit" variant="contained" onClick={() => submitLogin}>
+          {/* <Button
+            type="submit"
+            variant="contained"
+            onClick={() => submitLogin}
+            disabled={!(username && password)}
+          >
             Login
           </Button>
-          <Button variant="contained" color="primary" onClick={registerHandler}>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "orange" }}
+            onClick={registerHandler}
+          >
             Register Now!
-          </Button>
+          </Button> */}
+          <Button type="submit" buttonLabel="Authenticate" color="dark" disabled={!(username && password)} onClick={() => submitLogin}/>
         </span>
       </form>
     </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../../components/General/Button/Button';
 
 const Home = (props) => {
     return(
