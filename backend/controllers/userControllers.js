@@ -4,27 +4,25 @@ const HttpError = require("../models/errorHandleModel");
 const signupUser = async (req, res, next) => {
   const { name, username, password } = req.body;
 
-  let existingUser;
-
   //Checks if a user exists in the databasxxe
-  try {
-    existingUser = await UserSchema.findOne({ username: username });
-  } catch (err) {
-    const error = new HttpError("Cannot Sign Up", 500);
+  let existingUser;
+  try{
+  // finds one document that matches
+  existingUser = await UserSchema.findOne({username: username});
+  }
+  catch(err){
+    const error = new HttpError('Signing up failed, try again', 500);
     return next(error);
   }
 
-  //Checks if credentials match database ones
-  if (existingUser) {
-    const error = new HttpError(
-      "Sign Up failed, the Username already exists",
-      422
-    );
+  // checks if user exists already
+  if(existingUser){
+    const error = new HttpError('User already exists', 422);
     return next(error);
   }
 
   //Setup for the new User created
-  let newUser = new UserSchema({ name, username, password, posts: [] });
+  const newUser = new UserSchema({ name, username, password, posts: [] });
 
   try {
     await newUser.save();
