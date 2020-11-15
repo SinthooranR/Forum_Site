@@ -7,13 +7,14 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const userRoutes = require("./routes/userRoutes");
+const postRoutes = require("./routes/postRoutes");
 
 app.use(bodyParser.json());
 app.use(cors());
 
 app.use("/api/users", userRoutes); // => api/users/....
 
-// app.use("/api/posts", cardRoutes); // => api/posts/....
+app.use("/api/posts", postRoutes); // => api/posts/....
 
 app.use((error, req, res, next) => {
   // checks if headers were sent
@@ -27,7 +28,7 @@ app.use((error, req, res, next) => {
 
 // start server
 mongoose
-  .connect(uri)
+  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(5000);
   })

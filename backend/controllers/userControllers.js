@@ -6,23 +6,29 @@ const signupUser = async (req, res, next) => {
 
   //Checks if a user exists in the databasxxe
   let existingUser;
-  try{
-  // finds one document that matches
-  existingUser = await UserSchema.findOne({username: username});
-  }
-  catch(err){
-    const error = new HttpError('Signing up failed, try again', 500);
+
+  try {
+    // finds one document that matches
+    existingUser = await UserSchema.findOne({ username: username });
+  } catch (err) {
+    const error = new HttpError("Cannot Access Database", 500);
     return next(error);
   }
 
   // checks if user exists already
-  if(existingUser){
-    const error = new HttpError('User already exists', 422);
+  if (existingUser) {
+    const error = new HttpError("User already exists", 422);
     return next(error);
   }
 
   //Setup for the new User created
-  const newUser = new UserSchema({ name, username, password, posts: [] });
+  const newUser = new UserSchema({
+    name,
+    username,
+    password,
+    posts: [],
+    replies: [],
+  });
 
   try {
     await newUser.save();

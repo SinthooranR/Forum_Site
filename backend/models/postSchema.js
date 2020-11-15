@@ -16,10 +16,11 @@ const postSchema = new Schema({
     type: String,
     required: true,
   },
-  reply: [
+  replies: [
     {
       type: mongoose.Types.ObjectId,
       required: true,
+      ref: "Reply",
     },
   ],
 });

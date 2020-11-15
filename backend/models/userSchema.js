@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
@@ -19,6 +19,13 @@ const userSchema = new Schema({
       type: mongoose.Types.ObjectId, //helps mongo determine the id
       required: true,
       ref: "Post", //connects current scheme with another Schema
+    },
+  ],
+  replies: [
+    {
+      type: mongoose.Types.ObjectId, //helps mongo determine the id
+      required: true,
+      ref: "Reply", //connects current scheme with another Schema
     },
   ],
 });
