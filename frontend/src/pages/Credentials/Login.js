@@ -56,21 +56,6 @@ const Login = (props) => {
         />
 
         <span>
-          {/* <Button
-            type="submit"
-            variant="contained"
-            onClick={() => submitLogin}
-            disabled={!(username && password)}
-          >
-            Login
-          </Button>
-          <Button
-            variant="contained"
-            style={{ backgroundColor: "orange" }}
-            onClick={registerHandler}
-          >
-            Register Now!
-          </Button> */}
           <Button
             type="submit"
             buttonLabel="Authenticate"

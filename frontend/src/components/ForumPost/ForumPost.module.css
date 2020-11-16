@@ -1,17 +1,53 @@
-.Post{
-    text-align: left;
+.Post {
+  text-align: left;
+  border-radius: 10px;
+  height: 300px;
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 2%;
+}
+
+.Post p,
+.Post h2 {
+  margin-left: 1%;
+}
+
+.LightPost {
+  border: 1px solid black;
+}
+
+.LightPost:hover {
+  background-color: #ada996;
+  cursor: pointer;
+}
+
+
+.DarkPost {
+    border: 1px solid white;
+  }
+
+.DarkPost:hover {
+  background-color: #1f1c2c;
+  cursor: pointer;
+}
+
+.LightView{
     border: 1px solid black;
-    border-radius: 5%;
-    height: 300px;
+}
+
+.DarkView{
+    border: 1px solid white;
+}
+
+.Reply {
+    text-align: left;
+    border-radius: 10px;
+    height: 150px;
     width: 50%;
     margin-left: 25%;
     margin-top: 2%;
-}
-/* 
-.LightBG{
-
-}
-
-.DarkBG{
-
-} */
+  }
+  
+  .Reply p {
+    margin-left: 1%;
+  }

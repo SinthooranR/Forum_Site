@@ -77,6 +77,51 @@ const getPosts = async (req, res, next) => {
   res.json({ posts: posts.map((post) => post.toObject({ getters: true })) });
 };
 
+const getRepliesByPostID = async (req, res, next) => {
+  let post;
+  let postID = req.params.pid
+
+  try{
+    post = await PostSchema.findById(postID).populate("replies");
+  }
+  catch(err){
+    const error = new HttpError("Cannot find this Post ID", 500);
+    return next(error);
+  }
+
+  
+  if (!post || post.replies.length === 0) {
+    return next(
+      new HttpError("Could not find cards for the provided user id", 404)
+    );
+  }
+  
+  res.json({
+    posts: post.replies.map((reply) => reply.toObject({ getters: true })),
+  });
+  
+}
+
+const getPostByPostID = async (req, res, next) => {
+  let post;
+  let postID = req.params.pid
+
+  try{
+    post = await PostSchema.findById(postID);
+  }
+  catch(err){
+    const error = new HttpError("Cannot find this Post ID", 500);
+    return next(error);
+  }
+  
+  res.json({
+    posts: post.toObject({ getters: true }),
+  });
+  
+}
+
 exports.createPost = createPost;
 exports.createReply = createReply;
 exports.getPosts = getPosts;
+exports.getRepliesByPostID = getRepliesByPostID;
+exports.getPostByPostID = getPostByPostID;

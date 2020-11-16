@@ -7,12 +7,15 @@ import LoginPage from "./pages/Credentials/Login";
 import SignupPage from "./pages/Credentials/Signup";
 import UserHomePage from "./pages/MainPages/UserHomePage";
 import CreatePostPage from "./pages/Posts/CreatePost";
+import CreateReplyPage from './pages/Posts/CreateReply';
+import FullPostPage from './pages/Posts/ViewFullPost';
 import Button from "./components/General/Button/Button";
 
 // a global function to pass variables
 import { MainContext } from "./main_context";
 
 import classes from "./App.module.css";
+import FullPost from "./pages/Posts/ViewFullPost";
 
 function App() {
   const [loginState, setLoginState] = useState(false);
@@ -45,16 +48,6 @@ function App() {
     theme = classes.DarkBG;
   }
 
-  // switch (chooseTheme) {
-  //   case false:
-  //     theme = ".LightTheme";
-  //     break;
-  //   case true:
-  //     theme = ".DarkTheme";
-  //     break;
-  //   default:
-  // }
-
   let routes;
 
   if (!loginState) {
@@ -69,7 +62,9 @@ function App() {
     routes = (
       <Switch>
         <Route exact path="/" component={UserHomePage} />
-        <Route exact path="/createPost" component={CreatePostPage} />
+        <Route path="/createPost" component={CreatePostPage} />
+        <Route path="/createReply" component={CreateReplyPage} />
+        <Route path="/viewPost" component={FullPostPage} />
       </Switch>
     );
   }

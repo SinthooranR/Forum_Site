@@ -19,4 +19,8 @@ router.post(
 
 router.get("/getPosts", postControllers.getPosts);
 
+router.get("/getReplies/:pid", postControllers.getRepliesByPostID);
+
+router.get("/:pid", postControllers.getPostByPostID);
+
 module.exports = router;
