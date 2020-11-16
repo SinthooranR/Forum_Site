@@ -17,14 +17,22 @@ import classes from "./App.module.css";
 function App() {
   const [loginState, setLoginState] = useState(false);
   const [chooseTheme, setChooseTheme] = useState(false);
+  const [user_id, setUser_Id] = useState(false);
+  const [post_id, setPost_Id] = useState(false);
   let theme = undefined;
 
-  const loginChange = useCallback(() => {
+  const loginChange = useCallback((uid) => {
     setLoginState(true);
+    setUser_Id(uid);
   }, []);
 
   const logoutChange = useCallback(() => {
     setLoginState(false);
+    setUser_Id(null);
+  }, []);
+
+  const grabPostID = useCallback((pid) => {
+    setPost_Id(pid);
   }, []);
 
   const themeSwitchHandler = useCallback(() => {
@@ -74,6 +82,9 @@ function App() {
         logout: logoutChange,
         themeSwitch: chooseTheme,
         setTheme: themeSwitchHandler,
+        userId: user_id,
+        postId: post_id,
+        usePost: grabPostID
       }}
     >
       <div className={theme}>

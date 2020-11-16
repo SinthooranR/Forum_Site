@@ -6,5 +6,7 @@ export const MainContext = createContext({
     logout: () => {},
     loggedIn: false,
     themeSwitch: false,
-    setTheme: () => {}
+    setTheme: () => {},
+    postId: null,
+    usePost: () => {}
 });

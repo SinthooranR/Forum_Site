@@ -2,9 +2,9 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { MainContext } from "../../main_context";
 import Input from "../../components/General/Input/Input";
+import Button from "../../components/General/Button/Button";
+import axios from "axios";
 import classes from "./Login.module.css";
-import Button from '../../components/General/Button/Button';
-
 const Login = (props) => {
   const history = useHistory();
   const auth = useContext(MainContext);
@@ -17,10 +17,23 @@ const Login = (props) => {
     setPassword(event.target.value);
   };
 
-  const submitLogin = (event) => {
-    alert(`${username}, ${password}`);
-    console.log(username, password);
-    auth.login();
+  const submitLogin = async (event) => {
+    axios
+      .post("http://localhost:5000/api/users/login", {
+        username: username,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+        auth.login(response.data.users.id);
+        alert(response.data.users.id);
+        history.push("/"); //redirects the user back to main page
+      })
+      .catch((error) => {
+        history.push("/login"); //ERROR REDIRECT TEST
+        console.log(error);
+      });
+    // alert()
     history.push("/");
     event.preventDefault();
   };
@@ -58,7 +71,13 @@ const Login = (props) => {
           >
             Register Now!
           </Button> */}
-          <Button type="submit" buttonLabel="Authenticate" color="dark" disabled={!(username && password)} onClick={() => submitLogin}/>
+          <Button
+            type="submit"
+            buttonLabel="Authenticate"
+            color="dark"
+            disabled={!(username && password)}
+            onClick={() => submitLogin}
+          />
         </span>
       </form>
     </div>

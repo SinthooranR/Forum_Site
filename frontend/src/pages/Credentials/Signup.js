@@ -3,13 +3,13 @@ import { useHistory } from "react-router-dom";
 import { MainContext } from "../../main_context";
 import Input from "../../components/General/Input/Input";
 import Button from '../../components/General/Button/Button';
+import axios from "axios";
 import classes from "./Signup.module.css";
 
 const SignUp = (props) => {
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const auth = useContext(MainContext);
   const history = useHistory();
@@ -18,29 +18,31 @@ const SignUp = (props) => {
     setUsername(event.target.value);
   };
 
-  const changeEmail = (event) => {
-    setEmail(event.target.value);
+  const changeName = (event) => {
+    setName(event.target.value);
   };
 
   const changePassword = (event) => {
     setPassword(event.target.value);
   };
 
-  const changeConfirmPassword = (event) => {
-    setConfirmPassword(event.target.value);
-  };
-
-  const loginHandler = (event) => {
-    history.push("/login");
+  const submitSignup = async (event) => {
     event.preventDefault();
-  };
-
-  const submitSignup = (event) => {
-    auth.login();
-    alert(`${username}, ${email}, ${password}, ${confirmPassword}`);
-    console.log(username, email, password, confirmPassword);
-    history.push("/");
-    event.preventDefault();
+    axios.post("http://localhost:5000/api/users/signup", {
+      name: name,
+      username: username,
+      password: password,
+    }) .then((response) => {
+      console.log(response);
+      auth.login(response.data.users.id);
+      alert(response.data.users.id);
+      history.push("/"); //redirects the user back to main page
+    })
+    .catch((error) => {
+      history.push("/signup"); //ERROR REDIRECT TEST
+      console.log(error);
+    });
+    // alert()
   };
 
   return (
@@ -49,15 +51,15 @@ const SignUp = (props) => {
       <form noValidate autoComplete="off" onSubmit={submitSignup}>
         <Input
           type="text"
-          placeholder="Enter Username"
-          value={username}
-          onChange={changeUsername}
+          placeholder="Enter Name"
+          value={name}
+          onChange={changeName}
         />
         <Input
           type="text"
-          placeholder="Enter Email"
-          value={email}
-          onChange={changeEmail}
+          placeholder="Enter Username"
+          value={username}
+          onChange={changeUsername}
         />
         <Input
           type="password"
@@ -65,15 +67,8 @@ const SignUp = (props) => {
           value={password}
           onChange={changePassword}
         />
-        <Input
-          type="text"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={changeConfirmPassword}
-        />
-
         <span>
-        <Button type="submit" buttonLabel="Verify and SignUp" color="dark" disabled={!(username && email && password && confirmPassword)} onClick={() => submitSignup}/>
+        <Button type="submit" buttonLabel="Verify and SignUp" color="dark" disabled={!(name && username && password)} onClick={() => submitSignup}/>
         </span>
       </form>
     </div>

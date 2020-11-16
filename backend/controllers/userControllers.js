@@ -68,10 +68,30 @@ const loginUser = async (req, res, next) => {
 
   res.json({
     message: "Logged In",
-    user: existingUser.toObject({ getters: true }),
+    users: existingUser.toObject({ getters: true }),
   });
 };
+
+const getUser = async(req, res, next) => {
+  let userId = req.params.uid;
+
+  let user;
+  try{
+    user = await UserSchema.findById(userId);
+  }
+  catch(err){
+    const error = new HttpError(
+      "Cannot find the User... Try Again",
+      500
+    );
+    return next(error);
+  }
+  res.json({
+    users: user.toObject({ getters: true }),
+  });
+}
 
 // the exports used in the routes
 exports.loginUser = loginUser;
 exports.signupUser = signupUser;
+exports.getUser = getUser;

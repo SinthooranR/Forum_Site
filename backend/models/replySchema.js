@@ -17,6 +17,10 @@ const replySchema = new Schema({
     type: String,
     required: true,
   },
+  author: {
+    type: String,
+    required: true
+  },
   reply: [
     {
       type: mongoose.Types.ObjectId,

@@ -4,9 +4,9 @@ const ReplySchema = require("../models/replySchema");
 const HttpError = require("../models/errorHandleModel");
 
 const createPost = async (req, res, next) => {
-  const { title, paragraph, userID } = req.body;
+  const { title, paragraph, author, userID } = req.body;
 
-  let newPost = new PostSchema({ title, paragraph, userID, replies: [] });
+  let newPost = new PostSchema({ title, paragraph, userID, author, replies: [] });
 
   let user;
 
@@ -30,8 +30,8 @@ const createPost = async (req, res, next) => {
 };
 
 const createReply = async (req, res, next) => {
-  const { paragraph, postID, userID } = req.body;
-  let newReply = new ReplySchema({ paragraph, postID, userID, replies: [] });
+  const { paragraph, postID, userID, author } = req.body;
+  let newReply = new ReplySchema({ paragraph, postID, userID, author, replies: [] });
 
   let post;
   let user;

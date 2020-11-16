@@ -23,4 +23,6 @@ router.post(
   userControllers.signupUser
 );
 
+router.get('/:uid', userControllers.getUser);
+
 module.exports = router;
