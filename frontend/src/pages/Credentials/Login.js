@@ -26,14 +26,12 @@ const Login = (props) => {
       .then((response) => {
         console.log(response);
         auth.login(response.data.users.id);
-        alert(response.data.users.id);
         history.push("/"); //redirects the user back to main page
       })
       .catch((error) => {
         history.push("/login"); //ERROR REDIRECT TEST
         console.log(error);
       });
-    // alert()
     history.push("/");
     event.preventDefault();
   };

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import Button from "../General/Button/Button";
 import { MainContext } from "../../main_context";
 import classes from "./ForumPost.module.css";
 
@@ -38,7 +37,7 @@ const ForumPost = (props) => {
         onClick={props.onClick}
       >
         <p>Replied By: {props.author}</p>
-        <p>{props.reply}</p>
+        <p>{props.replyPost}</p>
       </div>
     );
   }
@@ -56,11 +55,7 @@ const ForumPost = (props) => {
     );
   }
 
-  return (
-    <React.Fragment>
-      {post}
-    </React.Fragment>
-  );
+  return <React.Fragment>{post}</React.Fragment>;
 };
 
 export default ForumPost;

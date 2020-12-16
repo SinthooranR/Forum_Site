@@ -19,35 +19,36 @@
 .LightPost:hover {
   background-color: #ada996;
   cursor: pointer;
+  transition: 1s;
 }
 
-
 .DarkPost {
-    border: 1px solid white;
-  }
+  border: 1px solid white;
+}
 
 .DarkPost:hover {
   background-color: #1f1c2c;
   cursor: pointer;
+  transition: 1s;
 }
 
-.LightView{
-    border: 1px solid black;
+.LightView {
+  border: 1px solid black;
 }
 
-.DarkView{
-    border: 1px solid white;
+.DarkView {
+  border: 1px solid white;
 }
 
 .Reply {
-    text-align: left;
-    border-radius: 10px;
-    height: 150px;
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 2%;
-  }
-  
-  .Reply p {
-    margin-left: 1%;
-  }
+  text-align: left;
+  border-radius: 10px;
+  height: 150px;
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 2%;
+}
+
+.Reply p {
+  margin-left: 1%;
+}

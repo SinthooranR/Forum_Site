@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import NavItem from "./NavItem";
 import logo from "../../../assets/logo.png";
-// import Button from "@material-ui/core/Button";
 import Button from "../Button/Button";
 import { MainContext } from "../../../main_context";
 import classes from "./Navbar.module.css";
@@ -10,6 +9,7 @@ import classes from "./Navbar.module.css";
 const Navbar = (props) => {
   const auth = useContext(MainContext);
   const history = useHistory();
+  // const [theme, setTheme] = useState(false);
 
   const loginHandler = (event) => {
     history.push("/login");
@@ -27,11 +27,7 @@ const Navbar = (props) => {
     event.preventDefault();
   };
 
-  const themeSwitchHandler = () => {
-    auth.setTheme();
-  };
-
-  let navColor
+  let navColor;
   if (auth.themeSwitch === false) {
     navColor = classes.LightNav;
   } else {
@@ -78,22 +74,18 @@ const Navbar = (props) => {
 
   return (
     <div className={[classes.Navbar, navColor].join(" ")}>
-      <img src={logo} onClick={homeHandler} />
-      {auth.loggedIn && (
+      <img src={logo} onClick={homeHandler} alt="" />
+      {props.login && (
         <span className={classes.Links}>
           <NavItem exact to="/" routeName="Home" />
           <NavItem to="/myPosts" routeName="My Posts" />
         </span>
       )}
       <span>
-        {navButtons}{" "}
-        <Button
-          buttonLabel="Switch Theme"
-          color="dark"
-          onClick={themeSwitchHandler}
-        />
+        {navButtons} <Button icon onClick={props.themeFunc} />
       </span>
     </div>
   );
 };
+
 export default Navbar;

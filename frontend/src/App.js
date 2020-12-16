@@ -2,22 +2,19 @@ import { useState, useCallback } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/General/Navigation/Navbar";
 
-import HomePage from "./pages/MainPages/HomePage";
 import LoginPage from "./pages/Credentials/Login";
 import SignupPage from "./pages/Credentials/Signup";
 import UserHomePage from "./pages/MainPages/UserHomePage";
 import CreatePostPage from "./pages/Posts/CreatePost";
-import CreateReplyPage from './pages/Posts/CreateReply';
-import FullPostPage from './pages/Posts/ViewFullPost';
-import Button from "./components/General/Button/Button";
+import CreateReplyPage from "./pages/Posts/CreateReply";
+import FullPostPage from "./pages/Posts/ViewFullPost";
 
 // a global function to pass variables
 import { MainContext } from "./main_context";
 
 import classes from "./App.module.css";
-import FullPost from "./pages/Posts/ViewFullPost";
 
-function App() {
+function App(props) {
   const [loginState, setLoginState] = useState(false);
   const [chooseTheme, setChooseTheme] = useState(false);
   const [user_id, setUser_Id] = useState(false);
@@ -39,7 +36,7 @@ function App() {
   }, []);
 
   const themeSwitchHandler = useCallback(() => {
-    setChooseTheme(chooseTheme => !chooseTheme);
+    setChooseTheme((chooseTheme) => !chooseTheme);
   }, []);
 
   if (chooseTheme === false) {
@@ -53,9 +50,10 @@ function App() {
   if (!loginState) {
     routes = (
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={UserHomePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignupPage} />
+        <Route path="/viewPost" component={FullPostPage} />
       </Switch>
     );
   } else {
@@ -79,12 +77,12 @@ function App() {
         setTheme: themeSwitchHandler,
         userId: user_id,
         postId: post_id,
-        usePost: grabPostID
+        usePost: grabPostID,
       }}
     >
       <div className={theme}>
         <Router>
-          <Navbar />
+          <Navbar themeFunc={() => themeSwitchHandler()} />
           {routes}
         </Router>
       </div>

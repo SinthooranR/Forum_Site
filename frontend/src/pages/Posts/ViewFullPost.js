@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { MainContext } from "../../main_context";
-import Button from "../../components/General/Button/Button";
+// import Button from "../../components/General/Button/Button";
 import ForumPost from "../../components/ForumPost/ForumPost";
 import axios from "axios";
 
@@ -29,7 +29,7 @@ const FullPost = (props) => {
       // })
 
       setReplies(httpResult.data.posts);
-      console.log(replies);
+      // console.log(replies);
     };
 
     fetchData();
@@ -51,7 +51,7 @@ const FullPost = (props) => {
               key={reply.id}
               reply
               author={reply.author}
-              reply={reply.paragraph}
+              replyPost={reply.paragraph}
             />
           ))}
         </div>

@@ -23,7 +23,7 @@ const Input = (props) => {
   );
   let textarea = (
     <textarea
-      className={inputTheme}
+      className={[classes.Input, inputTheme].join(" ")}
       type="text"
       placeholder={props.placeholder}
       onChange={props.onChange}
@@ -34,9 +34,7 @@ const Input = (props) => {
     </textarea>
   );
 
-  return (
-    <div className={classes.Input}>{props.multiLine ? textarea : input}</div>
-  );
+  return <React.Fragment>{props.multiLine ? textarea : input}</React.Fragment>;
 };
 
 export default Input;

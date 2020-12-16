@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { MainContext } from "../../main_context";
 import Input from "../../components/General/Input/Input";
-import Button from '../../components/General/Button/Button';
+import Button from "../../components/General/Button/Button";
 import axios from "axios";
 import classes from "./Signup.module.css";
 
@@ -28,21 +28,21 @@ const SignUp = (props) => {
 
   const submitSignup = async (event) => {
     event.preventDefault();
-    axios.post("http://localhost:5000/api/users/signup", {
-      name: name,
-      username: username,
-      password: password,
-    }) .then((response) => {
-      console.log(response);
-      auth.login(response.data.users.id);
-      alert(response.data.users.id);
-      history.push("/"); //redirects the user back to main page
-    })
-    .catch((error) => {
-      history.push("/signup"); //ERROR REDIRECT TEST
-      console.log(error);
-    });
-    // alert()
+    axios
+      .post("http://localhost:5000/api/users/signup", {
+        name: name,
+        username: username,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+        auth.login(response.data.users.id);
+        history.push("/"); //redirects the user back to main page
+      })
+      .catch((error) => {
+        history.push("/signup"); //ERROR REDIRECT TEST
+        console.log(error);
+      });
   };
 
   return (
@@ -68,7 +68,13 @@ const SignUp = (props) => {
           onChange={changePassword}
         />
         <span>
-        <Button type="submit" buttonLabel="Verify and SignUp" color="dark" disabled={!(name && username && password)} onClick={() => submitSignup}/>
+          <Button
+            type="submit"
+            buttonLabel="Verify and SignUp"
+            color="dark"
+            disabled={!(name && username && password)}
+            onClick={() => submitSignup}
+          />
         </span>
       </form>
     </div>

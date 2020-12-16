@@ -1,39 +1,56 @@
-.Button{
-    box-sizing: border-box;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    height: 50px;
-    width: 20%;
-    margin-right: 2%;
-    cursor: pointer;
+/* Buttons has some active style on click */
+.Button {
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  border-radius: 2em;
+  font-size: 1.2rem;
+  height: 50px;
+  width: 20%;
+  margin-right: 2%;
+  cursor: pointer;
+  outline: none;
 }
 
-.Button:disabled, .Light:hover:disabled, .Dark:hover:disabled{
-    background: #dddddd;
-    color: grey;
+.Button:disabled,
+.Light:hover:disabled,
+.Dark:hover:disabled {
+  background: #dddddd;
+  color: grey;
 }
 
-/* .Button:hover{
-   
-} */
-
-.Light{
-    background-color:#fefefe;
-    color: black;
+.Light {
+  background-color: #fefefe;
+  border: 1px solid black;
+  color: black;
 }
 
-.Light:hover{
-    background-color: #ADA996;
-    color: black;
+.Light:hover {
+  background-color: #ada996;
+  color: black;
+  transition: 1s;
 }
 
-
-.Dark{
-    background-color: #434343;
-    color: white;
+.Dark {
+  background-color: #232526;
+  color: white;
+  border: 1px solid white;
 }
 
-.Dark:hover{
-    background-color: #1F1C2C;
-    color: white;
+.Dark:hover {
+  background-color: #1f1c2c;
+  color: white;
+  transition: 1s;
+}
+
+.Icon {
+  margin: 3% 2% 0 5%;
+  cursor: pointer;
+}
+
+svg:hover {
+  background-color: grey;
+  background-size: 500px 100px;
+  background-clip: content-box;
+  border-radius: 50%;
+  transition: 1s;
 }

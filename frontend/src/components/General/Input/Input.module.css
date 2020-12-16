@@ -1,38 +1,56 @@
-.Input{
-    margin-bottom: 5%;
-    margin-left: 0;
+input,
+textarea {
+  margin-bottom: 5%;
+  border-radius: 2em;
+  height: 50px;
+  outline: none;
+  text-align: left;
+  /* text-align: justify; */
+  padding-left: 20px;
 }
 
-
-.Input input{
-    height: 50px;
-    font-size: 1.2rem;
-    width: 100%;
-   
+textarea {
+  margin-left: 2%;
+  padding-top: 2%;
+  font-size: 1.5rem;
 }
 
-.Input textarea{
-    font-size: 1.6rem;
-    margin-left: 2%;
-    width: 100%;
+input {
+  font-size: 1.2rem;
 }
 
-.LightInput{
-    background-color: #DBDBDB;
-    color: black;
-    border: 1px solid black;
+/* 
+.Input input {
+  height: 50px;
+
+  width: 100%;
+  border-radius: 2em;
 }
 
-.LightInput::placeholder{
-    color: black;
+.Input textarea {
+
+  margin-left: 2%;
+  width: 100%;
+  border-radius: 2em;
+  padding-left: 5px;
+} */
+
+.LightInput {
+  background-color: #dbdbdb;
+  border: 1px solid black;
+  color: black;
 }
 
-.DarkInput{
-    background-color: #414345;
-    color: white;
-    border: 1px solid white;
+.LightInput::placeholder {
+  color: black;
 }
 
-.DarkInput::placeholder{
-    color: white;
+.DarkInput {
+  background-color: #414345;
+  border: 1px solid white;
+  color: white;
+}
+
+.DarkInput::placeholder {
+  color: white;
 }
