@@ -19,7 +19,7 @@ const replySchema = new Schema({
   },
   author: {
     type: String,
-    required: true
+    required: true,
   },
   reply: [
     {
@@ -30,4 +30,4 @@ const replySchema = new Schema({
   ],
 });
 
-module.exports = mongoose.model("Reply", replySchema);
+export default mongoose.model("Reply", replySchema);

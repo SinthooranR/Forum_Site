@@ -16,9 +16,9 @@ const postSchema = new Schema({
     type: String,
     required: true,
   },
-  author:{
+  author: {
     type: String,
-    required: true
+    required: true,
   },
   replies: [
     {
@@ -29,4 +29,4 @@ const postSchema = new Schema({
   ],
 });
 
-module.exports = mongoose.model("Post", postSchema);
+export default mongoose.model("Post", postSchema);

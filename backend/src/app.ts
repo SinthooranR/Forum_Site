@@ -1,10 +1,12 @@
 require("dotenv").config({ path: "../../Forum_Site/backend/.env" });
 const uri = process.env.MONGO_URI;
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const cors = require("cors");
+import express, { Request, Response, NextFunction } from "express";
+
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import cors from "cors";
+
 const app = express();
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
@@ -16,9 +18,9 @@ app.use("/api/users", userRoutes); // => api/users/....
 
 app.use("/api/posts", postRoutes); // => api/posts/....
 
-app.use((error, req, res, next) => {
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   // checks if headers were sent
-  if (res.headerSent) {
+  if (res.headersSent) {
     // doesnt allow further responses to be sent
     return next(error);
   }
@@ -28,7 +30,7 @@ app.use((error, req, res, next) => {
 
 // start server
 mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(uri!, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(5000);
   })
