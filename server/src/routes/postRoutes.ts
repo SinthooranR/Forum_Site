@@ -7,6 +7,7 @@ import {
   getPostByPostID,
   getRepliesByPostID,
 } from "../controllers/postControllers";
+import { jwtAuth } from "../utility/checkToken";
 
 const router = express.Router();
 
@@ -23,10 +24,10 @@ router.post(
   createReply
 );
 
-router.get("/getPosts", getPosts);
+router.get("/getPosts", jwtAuth, getPosts);
 
-router.get("/getReplies/:pid", getRepliesByPostID);
+router.get("/getReplies/:pid", jwtAuth, getRepliesByPostID);
 
-router.get("/:pid", getPostByPostID);
+router.get("/:pid", jwtAuth, getPostByPostID);
 
 module.exports = router;

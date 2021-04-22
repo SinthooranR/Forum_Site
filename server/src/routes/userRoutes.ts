@@ -1,6 +1,7 @@
 import express from "express";
 import { check } from "express-validator";
 import { loginUser, signupUser, getUser } from "../controllers/userControllers";
+import { jwtAuth } from "../utility/checkToken";
 
 const router = express.Router();
 
@@ -35,6 +36,6 @@ router.post(
   signupUser
 );
 
-router.get("/:uid", getUser);
+router.get("/:uid", jwtAuth, getUser);
 
 module.exports = router;

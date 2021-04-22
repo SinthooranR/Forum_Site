@@ -5,6 +5,7 @@ import HttpError from "../models/errorHandleModel";
 
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
+import { IPost, IReply, IUser } from "../models/interfaces/interfaces";
 
 export const createPost = async (
   req: Request,
@@ -26,7 +27,7 @@ export const createPost = async (
       replies: [],
     });
 
-    let user: any;
+    let user: IUser | null;
 
     try {
       user = await UserSchema.findById(userID);
@@ -37,8 +38,10 @@ export const createPost = async (
 
     try {
       await newPost.save(); //saves the newPost in its Collection
-      user.posts.push(newPost); //adds the data into the users post array storage
-      await user.save(); //updates the users data
+      if (user && user.posts) {
+        user.posts.push(newPost); //adds the data into the users post array storage
+        await user.save(); //updates the users data
+      }
     } catch (err) {
       const error = new HttpError("Failed to create the Post", 500);
       return next(error);
@@ -68,8 +71,8 @@ export const createReply = async (
       replies: [],
     });
 
-    let post: any;
-    let user: any;
+    let post: IPost | null;
+    let user: IUser | null;
 
     try {
       post = await PostSchema.findById(postID);
@@ -85,12 +88,17 @@ export const createReply = async (
     try {
       // Saves the Reply to the post by the ID
       await newReply.save();
-      post.replies.push(newReply);
-      await post.save();
 
-      // Saves the User ID of the replier
-      user.replies.push(newReply);
-      await user.save();
+      if (post && post.replies) {
+        post.replies.push(newReply);
+        await post.save();
+      }
+
+      if (user && user.replies) {
+        // Saves the User ID of the replier
+        user.replies.push(newReply);
+        await user.save();
+      }
     } catch (err) {
       const error = new HttpError("Failed to create the Reply", 500);
       return next(error);
@@ -106,7 +114,7 @@ export const getPosts = async (
   res: Response,
   next: NextFunction
 ) => {
-  let posts: any;
+  let posts: IPost[];
 
   try {
     posts = await PostSchema.find({});
@@ -115,7 +123,7 @@ export const getPosts = async (
     return next(error);
   }
   res.json({
-    posts: posts.map((post: any) => post.toObject({ getters: true })),
+    posts: posts.map((post: IPost) => post.toObject({ getters: true })),
   });
 };
 
@@ -134,14 +142,16 @@ export const getRepliesByPostID = async (
     return next(error);
   }
 
-  if (!post || post.replies.length === 0) {
+  if (!post || !post.replies) {
     return next(
       new HttpError("Could not find cards for the provided user id", 404)
     );
   }
 
   res.json({
-    posts: post.replies.map((reply: any) => reply.toObject({ getters: true })),
+    posts: post.replies.map((reply: IReply) =>
+      reply.toObject({ getters: true })
+    ),
   });
 };
 
@@ -155,12 +165,14 @@ export const getPostByPostID = async (
 
   try {
     post = await PostSchema.findById(postID);
+
+    if (post) {
+      res.json({
+        posts: post.toObject({ getters: true }),
+      });
+    }
   } catch (err) {
     const error = new HttpError("Cannot find this Post ID", 500);
     return next(error);
   }
-
-  res.json({
-    posts: post.toObject({ getters: true }),
-  });
 };

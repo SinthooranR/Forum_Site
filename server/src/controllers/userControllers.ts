@@ -3,6 +3,8 @@ import HttpError from "../models/errorHandleModel";
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
+import { IUser } from "../models/interfaces/interfaces";
+import { tokenGen } from "../utility/generateToken";
 
 export const signupUser = async (
   req: Request,
@@ -14,7 +16,6 @@ export const signupUser = async (
   let validateError = validationResult(req);
 
   if (!validateError.isEmpty()) {
-    // console.log(validateError.mapped());
     res.status(422).json({ errors: validateError.array() });
   } else {
     //Checks if a user exists in the databasxxe
@@ -47,19 +48,20 @@ export const signupUser = async (
 
     try {
       await newUser.save();
+      const token = tokenGen(newUser);
+
+      res.status(201).json({
+        token,
+        ...newUser._doc,
+        message: "Signed Up",
+      });
     } catch (err) {
-      console.log(err);
       const error = new HttpError(
         "Cannot Create the new User... Try Again",
         500
       );
       return next(error);
     }
-
-    res.status(201).json({
-      message: "Signed Up",
-      users: newUser.toObject({ getters: true }),
-    });
   }
 };
 
@@ -77,33 +79,36 @@ export const loginUser = async (
     // console.log(validateError.mapped());
     res.status(422).json({ errors: validateError.array() });
   } else {
-    let existingUser: any;
+    let existingUser: IUser | null;
 
     //Checks if a user exists in the databasxxe
     try {
       existingUser = await UserSchema.findOne({ username: username });
+
+      if (existingUser) {
+        //Checks if credentials match database ones
+        const passwordCompare = await bcrypt.compare(
+          password,
+          existingUser.password
+        );
+
+        if (!passwordCompare) {
+          const error = new HttpError("Password doesn't match", 400);
+          return next(error);
+        }
+
+        const token = tokenGen(existingUser);
+
+        res.status(201).json({
+          token,
+          ...existingUser._doc,
+          message: "Logged In",
+        });
+      }
     } catch (err) {
-      console.log(err);
       const error = new HttpError("Cannot Log In", 500);
       return next(error);
     }
-
-    //Checks if credentials match database ones
-
-    const passwordCompare = await bcrypt.compare(
-      password,
-      existingUser.password
-    );
-
-    if (!passwordCompare) {
-      const error = new HttpError("Password doesn't match", 400);
-      return next(error);
-    }
-
-    res.json({
-      message: "Logged In",
-      users: existingUser.toObject({ getters: true }),
-    });
   }
 };
 
@@ -114,14 +119,16 @@ export const getUser = async (
 ) => {
   let userId = req.params.uid;
 
-  let user: any;
+  let user: IUser | null;
   try {
     user = await UserSchema.findById(userId);
+    if (user) {
+      res.json({
+        users: user.toObject({ getters: true }),
+      });
+    }
   } catch (err) {
     const error = new HttpError("Cannot find the User... Try Again", 500);
     return next(error);
   }
-  res.json({
-    users: user.toObject({ getters: true }),
-  });
 };

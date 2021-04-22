@@ -1,4 +1,5 @@
-require("dotenv").config({ path: "../../Forum_Site/backend/.env" });
+import * as dotenv from "dotenv";
+dotenv.config({ path: "../../Forum_Site/server/.env" });
 const uri = process.env.MONGO_URI;
 
 import express, { Request, Response, NextFunction } from "express";

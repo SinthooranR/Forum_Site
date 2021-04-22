@@ -1,10 +1,9 @@
-const mongoose = require("mongoose");
+import { model, Schema } from "mongoose";
+import { IPost } from "./interfaces/interfaces";
 
-const Schema = mongoose.Schema;
-
-const postSchema = new Schema({
+const postSchema: Schema = new Schema({
   userID: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },
@@ -22,11 +21,11 @@ const postSchema = new Schema({
   },
   replies: [
     {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "Reply",
     },
   ],
 });
 
-export default mongoose.model("Post", postSchema);
+export default model<IPost>("Post", postSchema);

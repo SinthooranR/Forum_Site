@@ -1,15 +1,14 @@
-const mongoose = require("mongoose");
+import { model, Schema } from "mongoose";
+import { IReply } from "./interfaces/interfaces";
 
-const Schema = mongoose.Schema;
-
-const replySchema = new Schema({
+const replySchema: Schema = new Schema({
   postID: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "Post",
   },
   userID: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },
@@ -23,11 +22,11 @@ const replySchema = new Schema({
   },
   reply: [
     {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "Reply",
     },
   ],
 });
 
-export default mongoose.model("Reply", replySchema);
+export default model<IReply>("Reply", replySchema);

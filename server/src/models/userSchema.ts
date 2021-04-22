@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import { model, Schema } from "mongoose";
+import { IUser } from "./interfaces/interfaces";
 
-const Schema = mongoose.Schema;
-const userSchema = new Schema({
+const userSchema: Schema = new Schema({
   username: {
     type: String,
     required: true,
@@ -16,18 +16,18 @@ const userSchema = new Schema({
   },
   posts: [
     {
-      type: mongoose.Types.ObjectId, //helps mongo determine the id
+      type: Schema.Types.ObjectId, //helps mongo determine the id
       required: true,
       ref: "Post", //connects current scheme with another Schema
     },
   ],
   replies: [
     {
-      type: mongoose.Types.ObjectId, //helps mongo determine the id
+      type: Schema.Types.ObjectId, //helps mongo determine the id
       required: true,
       ref: "Reply", //connects current scheme with another Schema
     },
   ],
 });
 // exports with the correct collection and schema using mongoose
-export default mongoose.model("User", userSchema);
+export default model<IUser>("User", userSchema);
