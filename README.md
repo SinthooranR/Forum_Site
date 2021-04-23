@@ -1,3 +1,21 @@
+# Uses 
+- React (soon replacing my Create-React-App client setup with NextJS to try those features)
+- Redux
+- TypeScript
+- Node.js
+- Express
+- MongoDB (with Mongoose)
+
+# To Run Code:
+## Client
+- run `npm install`
+## Server
+- run `npm install`
+- have a MongoDB project set up and use that uri in app.ts
+- for token keys simply test one with a random key of your choosing
+- then run `npm start` which compiles the typescript code and creates a javascript build
+    - this will then run the server code   
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
