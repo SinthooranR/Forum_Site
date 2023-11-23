@@ -2,9 +2,9 @@
 - React (soon replacing my Create-React-App client setup with NextJS to try those features)
 - Redux
 - TypeScript
-- Node.js
-- Express
-- MongoDB (with Mongoose)
+- Node.js (being replaced with .NET)
+- Express (being replaced with .NET)
+- MongoDB (being replaced with SQL Server)
 
 # To Run Code:
 ## Client
