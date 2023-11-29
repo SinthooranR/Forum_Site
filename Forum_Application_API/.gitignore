@@ -35,3 +35,7 @@ appsettings.json
 
 # vercel
 .vercel
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
