@@ -25,7 +25,9 @@ namespace Forum_Application_API.Methods
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()), // Convert int UserId to string
+                    new Claim("userId", user.Id.ToString()), // Convert int UserId to string
+                    new Claim("userName", user.FirstName + ' ' + user.LastName),
+                    new Claim("email", user.Email),
                     // Add additional claims as needed
                 }),
                 Expires = DateTime.UtcNow.AddHours(1), // Token expiration time

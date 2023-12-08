@@ -92,7 +92,8 @@ namespace Forum_Application_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = _userInterface.GetUsers().Where(u => u.Email.ToUpper() == userCreate.Email.ToUpper()).FirstOrDefault();
+        var user = _userInterface.GetUsers()
+            .FirstOrDefault(u => u.Email != null && u.Email.ToUpper() == userCreate.Email.ToUpper());
 
             var userIDExists = _userInterface.GetUsers().Where(u => u.Id == userCreate.Id).FirstOrDefault();
 
@@ -113,7 +114,8 @@ namespace Forum_Application_API.Controllers
                 Email = userCreate.Email,
                 FirstName = userCreate.FirstName,
                 LastName = userCreate.LastName,
-    };
+                CreatedDate = DateTime.Now
+        };
         
             var result = await _userManager.CreateAsync(userMap, userCreate.Password);
 
@@ -164,10 +166,19 @@ namespace Forum_Application_API.Controllers
             */
 
             var token = _jwtGenerator.GenerateToken(user);
+
+        // Set HttpOnly cookie
+        Response.Cookies.Append("token", token, new CookieOptions
+        {
+            HttpOnly = true,
+            SameSite = SameSiteMode.Strict,
+            Path = "/"
+        });
+
             return Ok(new { Token = token });
         }
-    
-                    
+
+
 
         //UPDATE
         [HttpPut("{userId}")]
@@ -175,28 +186,33 @@ namespace Forum_Application_API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
 
-        public IActionResult UpdateOwner(int userId, [FromBody] UserDto updatedUser)
+        public async Task<IActionResult> UpdateUser(int userId, [FromBody] UpdateUserDto updatedUser)
         {
-            if (updatedUser == null) return BadRequest(ModelState);
+            var userIdString = userId.ToString();
+            var user = await _userManager.FindByIdAsync(userIdString);
 
-            if (userId != updatedUser.Id) return BadRequest(ModelState);
-
-            if (!_userInterface.UserExists(userId))
+            if (user != null)
             {
-                return NotFound();
+                user.FirstName = updatedUser.FirstName;
+                user.LastName = updatedUser.LastName;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return Ok("Successfully Updated");
+                }
+                else
+                {
+                    return BadRequest(result.Errors);
+                }
+
             }
-
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            var userMap = _mapper.Map<User>(updatedUser);
-
-            if (!_userInterface.UpdateUser(userMap))
+            else
             {
-                ModelState.AddModelError("", "Something went wrong when updating User");
-                return StatusCode(500, ModelState);
+                ModelState.AddModelError("", "No such User");
+                return BadRequest(ModelState);
             }
-
-            return NoContent();
         }
 
         [HttpDelete("{userId}")]

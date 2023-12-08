@@ -92,3 +92,5 @@ C:\Users\Sinthooran\source\repos\Forum_Application_API\bin\Debug\net6.0\Microsof
 C:\Users\Sinthooran\source\repos\Forum_Application_API\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\Sinthooran\source\repos\Forum_Application_API\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\Sinthooran\source\repos\Forum_Application_API\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Sinthooran\source\repos\Forum_Application_API\bin\Debug\net6.0\appsettingsTemplate.Development.json
+C:\Users\Sinthooran\source\repos\Forum_Application_API\bin\Debug\net6.0\appsettingsTemplate.json

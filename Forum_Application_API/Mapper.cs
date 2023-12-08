@@ -11,8 +11,11 @@ namespace Forum_Application_API
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
             CreateMap<LoginUserDto, User>();
+            CreateMap<UpdateUserDto, User>();
             CreateMap<ForumThread, ThreadDto>();
             CreateMap<ThreadDto, ForumThread>();
+            CreateMap<Comment, CommentDto>();
+            CreateMap<CommentDto, Comment>();
         }
     }
 }

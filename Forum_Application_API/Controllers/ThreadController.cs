@@ -2,6 +2,7 @@
 using Forum_Application_API.Dto;
 using Forum_Application_API.Interfaces;
 using Forum_Application_API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum_Application_API.Controllers
@@ -15,12 +16,14 @@ namespace Forum_Application_API.Controllers
         private readonly IUserInterface _userInterface;
         private readonly ICommentInterface _commentInterface;
         private readonly IMapper _mapper;
-        public ThreadController(IThreadInterface threadInterface, IUserInterface userInterface, IMapper mapper, ICommentInterface commentInterface)
+        private readonly UserManager<User> _userManager;
+        public ThreadController(IThreadInterface threadInterface, IUserInterface userInterface, IMapper mapper, UserManager<User> userManager, ICommentInterface commentInterface)
         {
             _mapper = mapper;
             _threadInterface = threadInterface;
             _userInterface = userInterface;
             _commentInterface = commentInterface;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -29,33 +32,66 @@ namespace Forum_Application_API.Controllers
         {
             var threads = _mapper.Map<List<ForumThread>>(_threadInterface.GetThreads());
 
+            var updatedThreads = threads.Select(thread =>
+            {
+                thread.User = _userInterface.GetUser(thread.UserId);
+                thread.Comments = _commentInterface.GetCommentsByThread(thread.Id);
+                return thread;
+            });
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(threads);
+            return Ok(updatedThreads);
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("{threadId}")]
+        [ProducesResponseType(200, Type = typeof(ForumThread))]
+        [ProducesResponseType(400)]
+
+        public IActionResult GetThreadById(int threadId)
+        {
+            if (!_threadInterface.ThreadExists(threadId))
+            {
+                return NotFound();
+            }
+
+            var thread = _mapper.Map<ForumThread>(_threadInterface.GetThread(threadId));
+
+            thread.User = _userInterface.GetUser(thread.UserId);
+            thread.Comments = _commentInterface.GetCommentsByThread(thread.Id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(thread);
+        }
+
+        [HttpGet("user/{userId}")]
         [ProducesResponseType(200, Type = typeof(User))]
         [ProducesResponseType(400)]
 
-        public IActionResult GetThreadByUserId(int userId)
+        public IActionResult GetThreadsByUserId(int userId)
         {
             if (!_userInterface.UserExists(userId))
             {
                 return NotFound();
             }
 
-            var threads = _mapper.Map<List<ThreadDto>>(_threadInterface.GetThreadsByUser(userId));
-            
-
+            var threads = _mapper.Map<List<ForumThread>>(_threadInterface.GetThreadsByUser(userId));
+            var updatedThreads = threads.Select(thread =>
+            {
+                thread.User = _userInterface.GetUser(thread.UserId);
+                return thread;
+            });
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(threads);
+            return Ok(updatedThreads);
         }
 
         [HttpPost]
@@ -82,6 +118,7 @@ namespace Forum_Application_API.Controllers
             }
 
             threadMap.User = _userInterface.GetUser(userId);
+            threadMap.CreatedDate = DateTime.Now;
 
 
             if (!_threadInterface.CreateThread(threadMap))
@@ -90,7 +127,7 @@ namespace Forum_Application_API.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return Ok("Successfully created");
+            return Ok("Successfully Created");
         }
 
         [HttpPut("{threadId}")]
@@ -103,13 +140,15 @@ namespace Forum_Application_API.Controllers
 
             if (threadId != updatedThread.Id) return BadRequest(ModelState);
 
-            if (!_threadInterface.ThreadExists(threadId)){
+            if (!_threadInterface.ThreadExists(threadId))
+            {
                 return NotFound();
             }
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var threadMap = _mapper.Map<ForumThread>(updatedThread);
+            threadMap.UserId = userId;
 
             if (!_threadInterface.UpdateThread(userId, threadMap))
             {

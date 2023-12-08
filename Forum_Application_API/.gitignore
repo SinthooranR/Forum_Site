@@ -31,7 +31,10 @@ yarn-error.log*
 .env.production.local
 
 appsettings.json
+appsettings.Development.json
+appsettingsTemplate.Development.json
 /Migrations
+/obj
 
 # vercel
 .vercel

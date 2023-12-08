@@ -2,6 +2,7 @@
 using Forum_Application_API.Dto;
 using Forum_Application_API.Interfaces;
 using Forum_Application_API.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 
@@ -90,6 +91,7 @@ namespace Forum_Application_API.Controllers
                 return BadRequest(ModelState);
 
             var commentMap = _mapper.Map<Comment>(commentCreate);
+            commentMap.CreatedDate = DateTime.Now;
 
             var user = _userInterface.GetUser(userId);
 
@@ -125,7 +127,7 @@ namespace Forum_Application_API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
 
-        public IActionResult UpdateComment(int commentId, [FromQuery] int userId, [FromBody] CommentDto updatedComment)
+        public IActionResult UpdateComment(int commentId, [FromQuery] int threadId, [FromQuery] int userId, [FromBody] CommentDto updatedComment)
         {
             if (updatedComment == null) return BadRequest(ModelState);
 
@@ -148,6 +150,9 @@ namespace Forum_Application_API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var commentMap = _mapper.Map<Comment>(updatedComment);
+            commentMap.UserId = userId;
+            commentMap.ThreadId = threadId;
+            commentMap.CreatedDate = DateTime.Now;
 
             if (!_commentInterface.UpdateComment(commentMap))
             {
