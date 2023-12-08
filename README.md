@@ -1,10 +1,9 @@
 # Uses 
-- React (soon replacing my Create-React-App client setup with NextJS to try those features)
-- Redux
+- NextJS for Frontend
 - TypeScript
-- Node.js (being replaced with .NET)
-- Express (being replaced with .NET)
-- MongoDB (being replaced with SQL Server)
+- ASP.NET for Backend
+- Entity Framework
+- SQL Server
 
 # To Run Code:
 ## Client
