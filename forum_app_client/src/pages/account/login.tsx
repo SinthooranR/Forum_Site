@@ -1,11 +1,12 @@
-import React from 'react'
+import LoginForm from "@/components/Account/LoginForm";
+import React from "react";
 
 const Login = () => {
   return (
-    <div>
-      
+    <div className="container mx-auto px-4 bg-slate-900 h-screen w-screen">
+      <LoginForm />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
