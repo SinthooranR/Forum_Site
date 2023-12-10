@@ -5,9 +5,21 @@ interface InputProps {
   inputType?: string;
   label?: string;
   setInput: Dispatch<SetStateAction<string>>;
+  multiline?: boolean;
 }
 
-const Input: FC<InputProps> = ({ input, setInput, inputType, label }) => {
+const Input: FC<InputProps> = ({
+  input,
+  setInput,
+  inputType,
+  label,
+  multiline,
+}) => {
+  const calculateRows = () => {
+    const lineCount = input.split("\n").length;
+    return Math.max(4, lineCount); // Set a minimum of 4 rows
+  };
+
   return (
     <div className="mb-4">
       <label
@@ -16,14 +28,25 @@ const Input: FC<InputProps> = ({ input, setInput, inputType, label }) => {
       >
         {label}
       </label>
-      <input
-        className="shadow border rounded w-full py-3 px-2 text-gray-800 leading-tight focus:outline-none"
-        type={inputType || "text"}
-        id={label}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        required
-      />
+      {!multiline ? (
+        <input
+          className="shadow border rounded w-full py-3 px-2 text-gray-800 leading-tight focus:outline-none"
+          type={inputType || "text"}
+          id={label}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          required
+        />
+      ) : (
+        <textarea
+          className="shadow border rounded w-full py-3 px-2 text-gray-800 leading-tight focus:outline-none"
+          id={label}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          required
+          rows={calculateRows()}
+        />
+      )}
     </div>
   );
 };

@@ -1,24 +1,22 @@
-import AddWidget from "@/components/AddWidget";
 import ForumCard from "@/components/Forum/ForumCard";
-import MetaTitle from "@/components/MetaTitle";
-import { useAuth } from "@/util/auth-context";
 import axios from "axios";
 import { GetServerSideProps } from "next";
-import { FC, Fragment } from "react";
+import React, { FC, Fragment } from "react";
+import { parseCookies } from "nookies";
+import { parseJwt } from "@/util/parseJWT";
+import MetaTitle from "@/components/MetaTitle";
 
 interface Props {
   data: any;
 }
 
-const Home: FC<Props> = ({ data }) => {
-  const { user } = useAuth();
+const MyThreads: FC<Props> = ({ data }) => {
   return (
     <>
-      <MetaTitle title="Welcome" />
+      <MetaTitle title="My Threads" />
       <div className="container mx-auto my-auto py-8 px-8 flex flex-col items-center gap-8 bg-slate-900 h-screen">
-        {data
-          .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
-          .map((forum: any) => {
+        {data.length > 0 &&
+          data.map((forum: any) => {
             const timestampUTC = new Date(forum.createdDate);
             const timestampEST = timestampUTC.toLocaleString("en-US", {
               timeZone: "America/New_York",
@@ -37,15 +35,20 @@ const Home: FC<Props> = ({ data }) => {
             );
           })}
       </div>
-      {user && <AddWidget />}
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context
+) => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  const { token } = parseCookies(context);
+  const decodedUser = parseJwt(token);
   try {
-    const response = await axios.get("https://localhost:7252/apiThread/");
+    const response = await axios.get(
+      `https://localhost:7252/apiThread/user/${decodedUser?.userId}`
+    );
     const data = response.data;
     return {
       props: {
@@ -57,10 +60,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 
     return {
       props: {
-        data: "",
+        data: [],
       },
+      redirect: "/",
     };
   }
 };
 
-export default Home;
+export default MyThreads;
