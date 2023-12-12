@@ -5,41 +5,52 @@ import React, { FC, Fragment } from "react";
 import { parseCookies } from "nookies";
 import { parseJwt } from "@/util/parseJWT";
 import MetaTitle from "@/components/MetaTitle";
+import AddWidget from "@/components/General/AddWidget";
+import { useAuth } from "@/util/auth-context";
+import { Thread } from "@/interfaces";
 
-interface Props {
-  data: any;
+interface ThreadProps {
+  threads: Thread[];
 }
 
-const MyThreads: FC<Props> = ({ data }) => {
+const MyThreads: FC<ThreadProps> = ({ threads }) => {
+  const { user } = useAuth();
   return (
     <>
       <MetaTitle title="My Threads" />
       <div className="container mx-auto my-auto py-8 px-8 flex flex-col items-center gap-8 bg-slate-900 h-screen">
-        {data.length > 0 &&
-          data.map((forum: any) => {
-            const timestampUTC = new Date(forum.createdDate);
-            const timestampEST = timestampUTC.toLocaleString("en-US", {
-              timeZone: "America/New_York",
-            });
-            return (
-              <Fragment key={forum.id}>
-                <ForumCard
-                  id={forum.id}
-                  userName={forum.user.firstName + " " + forum.user.lastName}
-                  title={forum.title}
-                  description={forum.description}
-                  dateCreated={timestampEST}
-                  numberComments={forum.comments.length}
-                />
-              </Fragment>
-            );
-          })}
+        {threads.length > 0 &&
+          threads
+            .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
+            .map((forum: Thread) => {
+              const timestampUTC = new Date(forum.createdDate);
+              const timestampEST = timestampUTC.toLocaleString("en-US", {
+                timeZone: "America/New_York",
+              });
+              return (
+                <Fragment key={forum.id}>
+                  <ForumCard
+                    id={forum.id}
+                    userName={
+                      forum.user?.firstName + " " + forum.user?.lastName
+                    }
+                    title={forum.title}
+                    description={forum.description}
+                    dateCreated={timestampEST}
+                    numberComments={
+                      (forum.comments && forum.comments.length) || 0
+                    }
+                  />
+                </Fragment>
+              );
+            })}
+        {user && <AddWidget />}
       </div>
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async (
+export const getServerSideProps: GetServerSideProps<ThreadProps> = async (
   context
 ) => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -52,7 +63,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     const data = response.data;
     return {
       props: {
-        data,
+        threads: data,
       },
     };
   } catch (error) {
@@ -60,9 +71,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
     return {
       props: {
-        data: [],
+        threads: [],
       },
-      redirect: "/",
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
     };
   }
 };

@@ -12,7 +12,6 @@ const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password);
     try {
       const response = await getAuthToken(email, password);
       login(response);
@@ -21,10 +20,9 @@ const LoginForm = () => {
     }
   };
 
-  console.log("User:", user);
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 h-2/5 md:w-2/4">
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 h-auto md:h-2/5 md:w-2/4">
         <h1 className="text-2xl mb-6">Login</h1>
         <form onSubmit={handleSubmit}>
           {/* Use the InputComponent */}

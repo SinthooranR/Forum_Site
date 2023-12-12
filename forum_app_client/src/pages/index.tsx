@@ -1,41 +1,36 @@
-import AddWidget from "@/components/AddWidget";
+import AddWidget from "@/components/General/AddWidget";
 import ForumCard from "@/components/Forum/ForumCard";
 import MetaTitle from "@/components/MetaTitle";
 import { useAuth } from "@/util/auth-context";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import { FC, Fragment } from "react";
+import { Thread } from "@/interfaces";
 
 interface Props {
-  data: any;
+  threads: Thread[];
 }
 
-const Home: FC<Props> = ({ data }) => {
+const Home: FC<Props> = ({ threads }) => {
   const { user } = useAuth();
   return (
     <>
       <MetaTitle title="Welcome" />
       <div className="container mx-auto my-auto py-8 px-8 flex flex-col items-center gap-8 bg-slate-900 h-screen">
-        {data
+        {threads
           .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
-          .map((forum: any) => {
-            const timestampUTC = new Date(forum.createdDate);
-            const timestampEST = timestampUTC.toLocaleString("en-US", {
-              timeZone: "America/New_York",
-            });
-            return (
-              <Fragment key={forum.id}>
-                <ForumCard
-                  id={forum.id}
-                  userName={forum.user.firstName + " " + forum.user.lastName}
-                  title={forum.title}
-                  description={forum.description}
-                  dateCreated={timestampEST}
-                  numberComments={forum.comments.length}
-                />
-              </Fragment>
-            );
-          })}
+          .map((forum: Thread) => (
+            <Fragment key={forum.id}>
+              <ForumCard
+                id={forum.id}
+                userName={forum.user?.firstName + " " + forum.user?.lastName}
+                title={forum.title}
+                description={forum.description}
+                dateCreated={forum.createdDate}
+                numberComments={(forum.comments && forum.comments.length) || 0}
+              />
+            </Fragment>
+          ))}
       </div>
       {user && <AddWidget />}
     </>
@@ -49,7 +44,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
     const data = response.data;
     return {
       props: {
-        data,
+        threads: data,
       },
     };
   } catch (error) {
@@ -57,7 +52,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 
     return {
       props: {
-        data: "",
+        threads: [],
       },
     };
   }

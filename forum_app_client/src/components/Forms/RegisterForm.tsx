@@ -78,7 +78,7 @@ const RegisterForm = () => {
   return (
     <>
       <div className="flex items-center justify-center h-screen">
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 h-auto w-2/4">
+        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 h-auto sm:w-full md:w-2/4">
           <h1 className="text-2xl mb-6">Register</h1>
           <form onSubmit={handleSubmit}>
             {/* Use the InputComponent */}

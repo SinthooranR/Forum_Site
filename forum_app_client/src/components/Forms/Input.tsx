@@ -6,6 +6,7 @@ interface InputProps {
   label?: string;
   setInput: Dispatch<SetStateAction<string>>;
   multiline?: boolean;
+  disabled?: boolean;
 }
 
 const Input: FC<InputProps> = ({
@@ -14,6 +15,7 @@ const Input: FC<InputProps> = ({
   inputType,
   label,
   multiline,
+  disabled,
 }) => {
   const calculateRows = () => {
     const lineCount = input.split("\n").length;
@@ -36,6 +38,7 @@ const Input: FC<InputProps> = ({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           required
+          disabled={disabled}
         />
       ) : (
         <textarea

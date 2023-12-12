@@ -1,4 +1,4 @@
-import LoginForm from "@/components/Account/LoginForm";
+import LoginForm from "@/components/Forms/LoginForm";
 import MetaTitle from "@/components/MetaTitle";
 import React from "react";
 

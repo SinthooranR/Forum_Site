@@ -33,8 +33,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-indigo-500 p-4 fixed w-full top-0">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className="bg-indigo-500 p-4 fixed w-full top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center relative z-100">
         <Link href="/" className="text-white text-lg font-bold">
           Forum Site
         </Link>
@@ -43,10 +43,10 @@ const Navbar = () => {
           {user && (
             <div className="flex gap-8">
               <Link href="/profile/myThreads" className="text-white">
-                My Threads
+                Threads
               </Link>
               <Link href="/profile/myComments" className="text-white">
-                My Comments
+                Comments
               </Link>
 
               <div className="relative text-white" ref={dropdownRef}>
@@ -54,9 +54,13 @@ const Navbar = () => {
                   Profile
                 </button>
                 {dropdownOpen && (
-                  <ul className="absolute top-8 bg-white w-32 text-indigo-500 py-2 px-2 mt-2 space-y-2 rounded">
+                  <ul className="absolute top-8 right-0 bg-white w-32 text-indigo-500 py-2 px-2 mt-2 space-y-2 rounded sm:shadow-md flex flex-col items-center">
                     <li>
-                      <Link href="/profile" className="text-black">
+                      <Link
+                        href="/profile"
+                        className="text-black"
+                        onClick={() => closeDropdown()}
+                      >
                         View Profile
                       </Link>
                     </li>
