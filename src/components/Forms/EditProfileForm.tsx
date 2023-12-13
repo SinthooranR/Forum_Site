@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useAuth } from "@/util/auth-context";
 import { User } from "@/interfaces";
+import apiUrl from "@/getApiPath";
 
 interface Props {
   data: User;
@@ -26,13 +27,10 @@ const EditProfileForm: FC<Props> = ({ data }) => {
     e.preventDefault();
     setErrors([]);
     try {
-      const response = await axios.put(
-        `https://localhost:7252/apiUser/${user?.userId}`,
-        {
-          firstName,
-          lastName,
-        }
-      );
+      const response = await axios.put(`${apiUrl}/apiUser/${user?.userId}`, {
+        firstName,
+        lastName,
+      });
 
       if (response.data) {
         router.reload();

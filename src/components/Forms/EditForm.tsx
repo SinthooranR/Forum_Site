@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import Input from "./Input";
 import axios from "axios";
+import apiUrl from "@/getApiPath";
 
 interface EditProps {
   isComment?: boolean;
@@ -44,16 +45,13 @@ const EditForm: FC<EditProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const apiCall = !isComment
-      ? axios.put(
-          `https://localhost:7252/apiThread/${threadId}?userId=${user?.userId}`,
-          {
-            id: threadId,
-            title,
-            description,
-          }
-        )
+      ? axios.put(`${apiUrl}/apiThread/${threadId}?userId=${user?.userId}`, {
+          id: threadId,
+          title,
+          description,
+        })
       : axios.put(
-          `https://localhost:7252/apiComment/${commentId}?threadId=${threadId}&userId=${userId}`,
+          `${apiUrl}/apiComment/${commentId}?threadId=${threadId}&userId=${userId}`,
           {
             id: commentId,
             text: reply,

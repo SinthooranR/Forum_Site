@@ -1,5 +1,6 @@
 import EditProfileForm from "@/components/Forms/EditProfileForm";
 import MetaTitle from "@/components/MetaTitle";
+import apiUrl from "@/getApiPath";
 import { User } from "@/interfaces";
 import { parseJwt } from "@/util/parseJWT";
 import axios from "axios";
@@ -46,7 +47,7 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (
   const decodedUser = parseJwt(token);
   try {
     const response = await axios.get(
-      `https://localhost:7252/apiUser/${decodedUser?.userId}`
+      `${apiUrl}/apiUser/${decodedUser?.userId}`
     );
     const data = response.data;
     return {

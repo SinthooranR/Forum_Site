@@ -6,6 +6,7 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import { FC, Fragment } from "react";
 import { Thread } from "@/interfaces";
+import apiUrl from "@/getApiPath";
 
 interface Props {
   threads: Thread[];
@@ -40,7 +41,7 @@ const Home: FC<Props> = ({ threads }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   try {
-    const response = await axios.get("https://localhost:7252/apiThread/");
+    const response = await axios.get(`${apiUrl}/apiThread/`);
     const data = response.data;
     return {
       props: {

@@ -1,5 +1,6 @@
 import CommentCard from "@/components/Forum/CommentCard";
 import MetaTitle from "@/components/MetaTitle";
+import apiUrl from "@/getApiPath";
 import { Comment } from "@/interfaces";
 import { parseJwt } from "@/util/parseJWT";
 import axios from "axios";
@@ -49,7 +50,7 @@ export const getServerSideProps: GetServerSideProps<CommentProps> = async (
   const decodedUser = parseJwt(token);
   try {
     const response = await axios.get(
-      `https://localhost:7252/apiComment/${decodedUser?.userId}`
+      `${apiUrl}/apiComment/${decodedUser?.userId}`
     );
     const data = response.data;
     return {

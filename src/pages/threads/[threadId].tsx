@@ -8,6 +8,7 @@ import { GetServerSideProps } from "next";
 import React, { FC, Fragment } from "react";
 import { Comment, Thread } from "@/interfaces";
 import { getFormattedTime } from "@/util/getFormattedTime";
+import apiUrl from "@/getApiPath";
 
 interface ThreadProps {
   thread: Thread;
@@ -68,9 +69,7 @@ export const getServerSideProps: GetServerSideProps<ThreadProps> = async ({
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   const threadId = params?.threadId as string | undefined;
   try {
-    const response = await axios.get(
-      `https://localhost:7252/apiThread/${threadId}`
-    );
+    const response = await axios.get(`${apiUrl}/apiThread/${threadId}`);
     const data = response.data;
     return {
       props: {

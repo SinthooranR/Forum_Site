@@ -1,8 +1,9 @@
+import apiUrl from "@/getApiPath";
 import axios from "axios";
 
 export const getAuthToken = async (email: string, password: string) => {
   try {
-    const response = await axios.post("https://localhost:7252/apiUser/login", {
+    const response = await axios.post(`${apiUrl}/apiUser/login`, {
       email,
       password,
     });

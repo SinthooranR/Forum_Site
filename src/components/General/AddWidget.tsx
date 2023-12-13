@@ -3,6 +3,7 @@ import Input from "../Forms/Input";
 import { useAuth } from "@/util/auth-context";
 import axios from "axios";
 import { useRouter } from "next/router";
+import apiUrl from "@/getApiPath";
 
 interface WidgetProps {
   isComment?: boolean;
@@ -35,12 +36,12 @@ const AddWidget: FC<WidgetProps> = ({ isComment, threadId, threadOwner }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const apiCall = !isComment
-      ? axios.post(`https://localhost:7252/apiThread?userId=${user?.userId}`, {
+      ? axios.post(`${apiUrl}/apiThread?userId=${user?.userId}`, {
           title,
           description,
         })
       : axios.post(
-          `https://localhost:7252/apiComment?userId=${user?.userId}&threadId=${threadId}`,
+          `${apiUrl}/apiComment?userId=${user?.userId}&threadId=${threadId}`,
           {
             text: reply,
           }

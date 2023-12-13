@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import Input from "./Input";
 import { useRouter } from "next/router";
 import axios from "axios";
+import apiUrl from "@/getApiPath";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -34,7 +35,7 @@ const RegisterForm = () => {
     } else {
       setErrors([]);
       try {
-        const response = await axios.post("https://localhost:7252/apiUser/", {
+        const response = await axios.post(`${apiUrl}/apiUser/`, {
           firstName,
           lastName,
           email,

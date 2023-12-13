@@ -1,3 +1,4 @@
+import apiUrl from "@/getApiPath";
 import { useAuth } from "@/util/auth-context";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -14,12 +15,8 @@ const DeletePopup: FC<DeletePopupProps> = ({ id, cancelPopup, isComment }) => {
   const router = useRouter();
   const handleDelete = async () => {
     const apiCall = !isComment
-      ? axios.delete(
-          `https://localhost:7252/apiThread/${id}?userId=${user?.userId}`
-        )
-      : axios.delete(
-          `https://localhost:7252/apiComment/${id}?userId=${user?.userId}`
-        );
+      ? axios.delete(`${apiUrl}/apiThread/${id}?userId=${user?.userId}`)
+      : axios.delete(`${apiUrl}/apiComment/${id}?userId=${user?.userId}`);
 
     try {
       const response = await apiCall;

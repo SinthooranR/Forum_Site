@@ -8,6 +8,7 @@ import MetaTitle from "@/components/MetaTitle";
 import AddWidget from "@/components/General/AddWidget";
 import { useAuth } from "@/util/auth-context";
 import { Thread } from "@/interfaces";
+import apiUrl from "@/getApiPath";
 
 interface ThreadProps {
   threads: Thread[];
@@ -58,7 +59,7 @@ export const getServerSideProps: GetServerSideProps<ThreadProps> = async (
   const decodedUser = parseJwt(token);
   try {
     const response = await axios.get(
-      `https://localhost:7252/apiThread/user/${decodedUser?.userId}`
+      `${apiUrl}/apiThread/user/${decodedUser?.userId}`
     );
     const data = response.data;
     return {
