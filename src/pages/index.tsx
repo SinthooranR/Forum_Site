@@ -39,7 +39,7 @@ const Home: FC<Props> = ({ threads }) => {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1";
   try {
     const response = await axios.get(`${apiUrl}/apiThread/`);
     const data = response.data;

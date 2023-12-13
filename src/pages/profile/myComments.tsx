@@ -45,7 +45,7 @@ const MyComments: FC<CommentProps> = ({ comments }) => {
 export const getServerSideProps: GetServerSideProps<CommentProps> = async (
   context
 ) => {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1";
   const { token } = parseCookies(context);
   const decodedUser = parseJwt(token);
   try {
