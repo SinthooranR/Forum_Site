@@ -66,7 +66,8 @@ const ThreadPage: FC<ThreadProps> = ({ thread }) => {
 export const getServerSideProps: GetServerSideProps<ThreadProps> = async ({
   params,
 }) => {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1";
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED =
+    process.env.NODE_ENV === "development" ? "0" : "1";
   const threadId = params?.threadId as string | undefined;
   try {
     const response = await axios.get(`${apiUrl}/apiThread/${threadId}`);

@@ -54,7 +54,8 @@ const MyThreads: FC<ThreadProps> = ({ threads }) => {
 export const getServerSideProps: GetServerSideProps<ThreadProps> = async (
   context
 ) => {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1";
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED =
+    process.env.NODE_ENV === "development" ? "0" : "1";
   const { token } = parseCookies(context);
   const decodedUser = parseJwt(token);
   try {

@@ -42,7 +42,8 @@ const ProfilePage: FC<UserProps> = ({ user }) => {
 export const getServerSideProps: GetServerSideProps<UserProps> = async (
   context
 ) => {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1";
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED =
+    process.env.NODE_ENV === "development" ? "0" : "1";
   const { token } = parseCookies(context);
   const decodedUser = parseJwt(token);
   try {
