@@ -1,8 +1,10 @@
 import moment from "moment";
+import "moment-timezone";
 
 export const getFormattedTime = (date: string) => {
   const currentDate = moment();
-  const pastDate = moment(date);
+  const pastDate = moment.utc(date);
+  pastDate.tz("UTC");
 
   const duration = moment.duration(currentDate.diff(pastDate));
 
