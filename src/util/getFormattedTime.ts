@@ -1,10 +1,10 @@
-import moment from "moment";
-import "moment-timezone";
+import moment from "moment-timezone";
 
-export const getFormattedTime = (date: string) => {
+export const getFormattedTime = (date: string): string => {
+  const userTimeZone = moment.tz.guess();
   const currentDate = moment();
   const pastDate = moment.utc(date);
-  pastDate.tz("UTC");
+  pastDate.tz(userTimeZone);
 
   const duration = moment.duration(currentDate.diff(pastDate));
 
@@ -16,19 +16,22 @@ export const getFormattedTime = (date: string) => {
   const months = duration.asMonths();
   const years = duration.asYears();
 
+  const formattedTime = (value: number, unit: string) =>
+    `${Math.floor(value)} ${unit}${value !== 1 ? "s" : ""} ago`;
+
   if (seconds < 60) {
-    return `${Math.floor(seconds)} seconds ago`;
+    return formattedTime(seconds, "second");
   } else if (minutes < 60) {
-    return `${Math.floor(minutes)} minutes ago`;
+    return formattedTime(minutes, "minute");
   } else if (hours < 24) {
-    return `${Math.floor(hours)} hours ago`;
+    return formattedTime(hours, "hour");
   } else if (days < 7) {
-    return `${Math.floor(days)} days ago`;
+    return formattedTime(days, "day");
   } else if (weeks < 4) {
-    return `${Math.floor(weeks)} weeks ago`;
+    return formattedTime(weeks, "week");
   } else if (months < 12) {
-    return `${Math.floor(months)} months ago`;
+    return formattedTime(months, "month");
   } else {
-    return `${Math.floor(years)} years ago`;
+    return formattedTime(years, "year");
   }
 };

@@ -11,7 +11,6 @@ export interface Comment {
 export interface Thread {
   id: number;
   createdDate: string;
-  userId?: number;
   user?: User;
   title: string;
   description: string;

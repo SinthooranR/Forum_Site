@@ -7,7 +7,6 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import React, { FC, Fragment } from "react";
 import { Comment, Thread } from "@/interfaces";
-import { getFormattedTime } from "@/util/getFormattedTime";
 import apiUrl from "@/getApiPath";
 
 interface ThreadProps {
