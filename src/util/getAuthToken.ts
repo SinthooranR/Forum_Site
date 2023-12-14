@@ -15,6 +15,8 @@ export const getAuthToken = async (email: string, password: string) => {
 
     const cookies = parseCookies({}, response.headers["set-cookie"] || "");
 
+    console.log(cookies);
+
     const token = cookies.token;
 
     if (!token) {
