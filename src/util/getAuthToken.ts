@@ -13,7 +13,7 @@ export const getAuthToken = async (email: string, password: string) => {
       { withCredentials: true }
     );
 
-    const cookies = parseCookies({}, response.headers["set-cookie"] || "");
+    const cookies = parseCookies({}, response.headers["Set-Cookie"] || "");
 
     console.log(cookies);
 
