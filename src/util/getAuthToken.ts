@@ -10,9 +10,16 @@ export const getAuthToken = async (email: string, password: string) => {
         email,
         password,
       },
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin":
+            "https://forum-site-sinthooranr.vercel.app",
+        },
+      }
     );
-    console.log(response);
+
     const cookies = parseCookies({}, response.headers["Set-Cookie"] || "");
 
     console.log(cookies);
@@ -23,7 +30,7 @@ export const getAuthToken = async (email: string, password: string) => {
       throw new Error("Authentication failed");
     }
 
-    return token;
+    // return token;
   } catch (error) {
     console.error("Error fetching token:", error);
     throw error;
