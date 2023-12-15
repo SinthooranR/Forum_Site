@@ -29,7 +29,7 @@ export const getAuthToken = async (email: string, password: string) => {
       throw new Error("Authentication failed");
     }
 
-    // return token;
+    return token;
   } catch (error) {
     console.error("Error fetching token:", error);
     throw error;
