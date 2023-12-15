@@ -20,7 +20,7 @@ const Home: FC<Props> = ({ threads }) => {
       {threads.length === 0 ? (
         <div className="container mx-auto h-screen flex flex-col justify-center items-center bg-slate-900">
           <h1 className="text-3xl md:text-5xl lg:text-6xl text-center text-white">
-            No Threads Found
+            No Threads Found, make the first one!
           </h1>
         </div>
       ) : (
