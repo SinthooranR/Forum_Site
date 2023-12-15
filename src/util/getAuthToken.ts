@@ -4,32 +4,16 @@ import { parseCookies } from "nookies";
 
 export const getAuthToken = async (email: string, password: string) => {
   try {
-    const response = await axios.post(
-      `${apiUrl}/apiUser/login`,
-      {
-        email,
-        password,
-      },
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin":
-            "https://forum-site-sinthooranr.vercel.app",
-        },
-      }
-    );
+    const response = await axios.post(`${apiUrl}/apiUser/login`, {
+      email,
+      password,
+    });
 
-    const cookies = parseCookies({}, response.headers["Set-Cookie"] || "");
-
-    console.log("Cookies:", parseCookies());
-    const token = cookies.token;
-
-    if (!token) {
+    if (!response.data.token) {
       throw new Error("Authentication failed");
     }
 
-    return token;
+    return response.data.token;
   } catch (error) {
     console.error("Error fetching token:", error);
     throw error;
