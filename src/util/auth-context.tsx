@@ -55,7 +55,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       token,
     });
     setCookie(null, "token", token, {
-      sameSite: "strict",
+      sameSite: "none",
+      secure: true,
       path: "/", // Adjust the path as needed
       expires: new Date(Date.now() + 60 * 60 * 1000),
     });

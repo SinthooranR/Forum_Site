@@ -9,11 +9,16 @@ export const getAuthToken = async (email: string, password: string) => {
       password,
     });
 
-    if (!response.data.token) {
+    const cookies = parseCookies({}, response.headers["Set-Cookie"] || "");
+
+    console.log("Cookies:", parseCookies());
+    const token = cookies.token;
+
+    if (!token) {
       throw new Error("Authentication failed");
     }
 
-    return response.data.token;
+    return token;
   } catch (error) {
     console.error("Error fetching token:", error);
     throw error;
