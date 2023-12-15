@@ -67,6 +67,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     destroyCookie(null, "token");
     setUser(null);
+    router.push("/");
   };
 
   const contextValue: AuthContextType = {

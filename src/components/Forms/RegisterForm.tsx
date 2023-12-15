@@ -71,7 +71,7 @@ const RegisterForm = () => {
     if (isSuccess) {
       const timeoutId = setTimeout(() => {
         router.push("/account/login");
-      }, 5000);
+      }, 2000);
       return () => clearTimeout(timeoutId);
     }
   }, [router, isSuccess]);
@@ -154,7 +154,7 @@ const RegisterForm = () => {
             {isSuccess && (
               <div className="bg-green-400 text-white p-4 rounded-md">
                 <p className="font-bold">
-                  Registered Successfully, Redirecting in 5 seconds
+                  Registered Successfully, Redirecting...
                 </p>
               </div>
             )}
