@@ -57,7 +57,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     setCookie(null, "token", token, {
       sameSite: "none",
       secure: true,
-      path: "/", // Adjust the path as needed
+      path: "/", // Adjust the path as needed\
+      isEssential: true,
       expires: new Date(Date.now() + 60 * 60 * 1000),
     });
     router.push("/");
