@@ -19,9 +19,15 @@ const MyThreads: FC<ThreadProps> = ({ threads }) => {
   return (
     <>
       <MetaTitle title="My Threads" />
-      <div className="container mx-auto my-auto py-8 px-8 flex flex-col items-center gap-8 bg-slate-900 h-screen">
-        {threads.length > 0 &&
-          threads
+      {threads.length === 0 ? (
+        <div className="container mx-auto h-screen flex flex-col justify-center items-center bg-slate-900">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl text-center text-white">
+            No Threads Found
+          </h1>
+        </div>
+      ) : (
+        <div className="container mx-auto my-auto py-8 px-8 flex flex-col items-center gap-8 bg-slate-900 h-screen">
+          {threads
             .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
             .map((forum: Thread) => {
               const timestampUTC = new Date(forum.createdDate);
@@ -45,8 +51,9 @@ const MyThreads: FC<ThreadProps> = ({ threads }) => {
                 </Fragment>
               );
             })}
-        {user && <AddWidget />}
-      </div>
+        </div>
+      )}
+      {user && <AddWidget />}
     </>
   );
 };

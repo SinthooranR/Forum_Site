@@ -16,9 +16,15 @@ const MyComments: FC<CommentProps> = ({ comments }) => {
   return (
     <>
       <MetaTitle title="My Comments" />
-      <div className="container mx-auto my-auto py-8 px-8 flex flex-col items-center gap-8 bg-slate-900 h-screen">
-        {comments.length > 0 &&
-          comments.map((comment: Comment) => {
+      {comments.length === 0 ? (
+        <div className="container mx-auto h-screen flex flex-col justify-center items-center bg-slate-900">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl text-center text-white">
+            No Comments Found
+          </h1>
+        </div>
+      ) : (
+        <div className="container mx-auto my-auto py-8 px-8 flex flex-col items-center gap-8 bg-slate-900 h-screen">
+          {comments.map((comment: Comment) => {
             const timestampUTC = new Date(comment.createdDate);
             const timestampEST = timestampUTC.toLocaleString("en-US", {
               timeZone: "America/New_York",
@@ -37,7 +43,8 @@ const MyComments: FC<CommentProps> = ({ comments }) => {
               </Fragment>
             );
           })}
-      </div>
+        </div>
+      )}
     </>
   );
 };

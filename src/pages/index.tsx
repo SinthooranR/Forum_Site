@@ -17,22 +17,32 @@ const Home: FC<Props> = ({ threads }) => {
   return (
     <>
       <MetaTitle title="Welcome" />
-      <div className="container mx-auto my-auto py-8 px-8 flex flex-col items-center gap-8 bg-slate-900 h-screen">
-        {threads
-          .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
-          .map((forum: Thread) => (
-            <Fragment key={forum.id}>
-              <ForumCard
-                id={forum.id}
-                userName={forum.user?.firstName + " " + forum.user?.lastName}
-                title={forum.title}
-                description={forum.description}
-                dateCreated={forum.createdDate}
-                numberComments={(forum.comments && forum.comments.length) || 0}
-              />
-            </Fragment>
-          ))}
-      </div>
+      {threads.length === 0 ? (
+        <div className="container mx-auto h-screen flex flex-col justify-center items-center bg-slate-900">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl text-center text-white">
+            No Threads Found
+          </h1>
+        </div>
+      ) : (
+        <div className="container mx-auto my-auto py-8 px-8 flex flex-col items-center gap-8 bg-slate-900 h-screen">
+          {threads
+            .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
+            .map((forum: Thread) => (
+              <Fragment key={forum.id}>
+                <ForumCard
+                  id={forum.id}
+                  userName={forum.user?.firstName + " " + forum.user?.lastName}
+                  title={forum.title}
+                  description={forum.description}
+                  dateCreated={forum.createdDate}
+                  numberComments={
+                    (forum.comments && forum.comments.length) || 0
+                  }
+                />
+              </Fragment>
+            ))}
+        </div>
+      )}
       {user && <AddWidget />}
     </>
   );
