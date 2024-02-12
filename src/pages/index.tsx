@@ -8,7 +8,7 @@ import { FC, Fragment } from "react";
 import { Thread } from "@/interfaces";
 import apiUrl from "@/getApiPath";
 
-interface Props {
+export interface Props {
   threads: Thread[];
 }
 
